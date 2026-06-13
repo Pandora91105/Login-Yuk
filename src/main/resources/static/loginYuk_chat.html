@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoginYuk_chat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loginyuk_chat.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ======= NAVBAR ======= -->
+    <nav class="navbar">
+        <div class="navbar-logo">LOGIN YUK</div>
+
+        <div class="navbar-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="navbar-icons">
+            <i class="fa-solid fa-comment"></i>       <!-- chat -->
+            <i class="fa-solid fa-clipboard-list"></i> <!-- wishlist -->
+            <i class="fa-solid fa-circle-user"></i>    <!-- profile -->
+        </div>
+    </nav>
+    <!-- ======= END NAVBAR ======= -->
+
+
+    <!-- ======= MAIN CONTENT ======= -->
+    <div class="chat-container">
+
+        <!-- === SIDEBAR (list room) === -->
+        <aside class="chat-sidebar">
+
+            <!-- Room item — di-generate dari JS nanti -->
+            <div class="room-item active">
+                <img src="/assets/image_14.png" alt="avatar" class="room-avatar">
+                <div class="room-info">
+                    <span class="room-name">Store Name</span>
+                    <span class="room-preview">pesan terakhir...</span>
+                </div>
+            </div>
+            <!-- /room-item -->
+
+        </aside>
+        <!-- === END SIDEBAR === -->
+
+
+        <!-- === CHAT AREA === -->
+        <section class="chat-area">
+
+            <!-- Header chat -->
+            <div class="chat-header">
+                <img src="assets/image_14.png" alt="avatar" class="chat-avatar">
+                <div class="chat-header-info">
+                    <span class="chat-store-name">Store Name</span>
+                    <span class="chat-status">Active 4H ago</span>
+                </div>
+            </div>
+            <!-- /chat-header -->
+
+
+            <!-- Area pesan -->
+            <div class="chat-messages" id="chatMessages">
+
+                <!-- Pesan dari seller (kiri) -->
+                <div class="bubble-row theirs">
+                    <div class="bubble theirs">
+                        Halo, ada yang bisa dibantu?
+                    </div>
+                </div>
+
+                <!-- Pesan dari buyer (kanan) -->
+                <div class="bubble-row mine">
+                    <div class="bubble mine">
+                        boleh nego 150k gx?
+                    </div>
+                </div>
+
+                <!-- Bubble di-generate dari JS nanti -->
+
+            </div>
+            <!-- /chat-messages -->
+
+
+            <!-- Input kirim pesan -->
+            <div class="chat-input-area">
+                <input
+                    type="text"
+                    id="messageInput"
+                    class="chat-input"
+                    placeholder="Ketik pesan...">
+                <button id="sendBtn" class="send-btn">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+            </div>
+            <!-- /chat-input-area -->
+
+        </section>
+        <!-- === END CHAT AREA === -->
+
+    </div>
+    <!-- ======= END MAIN CONTENT ======= -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="js/loginYuk_chat.js"></script>
+</body>
+</html>

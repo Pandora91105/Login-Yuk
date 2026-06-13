@@ -1,0 +1,240 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 5 Jun 2026, 22.00.40
+    Author     : Callista A. Putri
+*/
+
+@import url('style.css');
+
+body {
+    background-color: var(--primary);
+    color: var(--text-main);
+    font-family: 'League Spartan', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: var(--primary);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-family: 'Krona One', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    background: var(--text-main);
+}
+
+.navbar-search{
+    background-color: #4E4E50;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 100px;
+    color: var(--accent);
+    width: 500px;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+
+.fa-solid.fa-comment {
+    color: var(--accent);
+    font-size: 25px;
+}
+
+.fa-solid.fa-clipboard-list {
+    color: var(--accent);
+    font-size: 25px;
+    margin-left: 8px;
+    margin-right:8px;
+}
+
+.fa-solid.fa-circle-user {
+    color: var(--accent);
+    font-size: 25px;
+}
+
+.chat-container {
+    display: grid;
+    grid-template-areas: 'sidebar sidebar  chat chat chat chat';
+}
+
+.chat-sidebar {
+    background-color: var(--secondary);
+    height: 90vh;
+    padding: 20px;
+    grid-area: sidebar;
+    border-right: 5px solid var(--primary);
+}
+
+.room-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+
+}
+
+.room-info {
+    display: flex;
+    flex-direction: column; 
+}
+
+.room-name {
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.room-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+}
+
+
+.chat-area {
+    background-color: var(--secondary);
+    height: 90vh;
+    padding: 20px;
+    grid-area: chat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat-messages {
+    height: 80vh;
+}
+
+.chat-header {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    background-color: #37353B;
+    height: 50px;
+    border-radius: 25px;
+    padding: 5px 15px;
+    gap: 10px;
+
+}
+
+.chat-header-info {
+    display: flex;
+    flex-direction: column; 
+}
+
+.chat-store-name {
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.chat-status {
+    color: var(--text-main);
+
+}
+
+.chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+}
+
+.chat-input-area {
+    color: #222223;
+    background-color: #222223;
+    border-radius: 75px;
+    height: 40px;
+    width: 100%;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.chat-messages {
+    width: 100%;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat-bubble {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 15px;
+}
+
+.bubble-row {
+    display: flex;
+    width: 100%;
+}
+
+.bubble-row.theirs {
+    justify-content: flex-start;
+}
+
+.bubble-row.mine {
+    justify-content: flex-end;
+}
+
+.bubble {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.bubble-row.theirs .bubble {
+    background-color: var(--chat-receiver-bubble);
+}
+
+.bubble-row.mine .bubble {
+    background-color: var(--chat-sender-bubble);
+}
+
+.chat-input{
+    display: flex;
+    align-items: center;
+}
+
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.chat-input-area input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 75px;
+    border: none;
+    outline: none;
+}
+
+.chat-input-area button {
+    background-color: var(--accent);
+    border: none;
+    padding: 5px 15px;
+    border-radius: 45px;
+    color: var(--text-main);
+    cursor: pointer;
+    margin-right: 10px;
+}
