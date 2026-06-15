@@ -29,6 +29,7 @@ public class SecurityConfig {
                     .requestMatchers("/ws-chat/**").permitAll()
                     .requestMatchers("/api/test-token/**").permitAll()
                     .requestMatchers("/api/transaksi/**").permitAll()
+                    .requestMatchers("/api/report/**").permitAll()
                     .requestMatchers("/", "/*.html", "/css/**", "/js/**",
                                      "/static/css/**", "/static/js/**",
                                      "/assets/**", "/favicon.ico", "/*.png")

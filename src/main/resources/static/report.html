@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Penjualan — Login Yuk</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #333; }
+
+        header {
+            background: #2d6cdf;
+            color: white;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 { font-size: 1.3rem; }
+
+        .container { max-width: 960px; margin: 32px auto; padding: 0 16px; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat-card .label { font-size: 0.8rem; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card .value { font-size: 1.6rem; font-weight: 700; color: #2d6cdf; }
+        .stat-card .sub { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
+
+        h2 { font-size: 1.1rem; margin-bottom: 16px; color: #444; }
+
+        .bulan-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .bulan-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+        .bulan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: #f7f9fc;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .bulan-header:hover { background: #eef2fa; }
+        .bulan-header .bulan-label { font-weight: 600; font-size: 1rem; }
+        .bulan-header .bulan-stats { font-size: 0.85rem; color: #666; }
+        .bulan-header .toggle { font-size: 1.2rem; color: #2d6cdf; }
+
+        .invoice-table { width: 100%; border-collapse: collapse; display: none; }
+        .invoice-table.open { display: table; }
+        .invoice-table th {
+            background: #f0f4f8;
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .invoice-table td { padding: 12px 16px; font-size: 0.9rem; border-top: 1px solid #f0f0f0; }
+        .invoice-table tr:hover td { background: #f9fbff; }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: #e8f0fe;
+            color: #2d6cdf;
+        }
+
+        .empty { text-align: center; padding: 60px 20px; color: #aaa; }
+        .loading { text-align: center; padding: 60px 20px; color: #888; }
+
+        #error-msg {
+            background: #fff0f0;
+            border: 1px solid #fcc;
+            border-radius: 8px;
+            padding: 16px;
+            color: #c00;
+            margin-bottom: 24px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📊 Laporan Penjualan</h1>
+    <span id="nama-toko" style="font-size:0.9rem; opacity:0.85;"></span>
+</header>
+
+<div class="container">
+    <div id="error-msg"></div>
+
+    <!-- Kartu statistik -->
+    <div class="stat-grid" id="stat-grid">
+        <div class="loading">Memuat data laporan...</div>
+    </div>
+
+    <!-- Rangkuman per bulan -->
+    <h2>📅 Rangkuman Invoice per Bulan</h2>
+    <div class="bulan-list" id="bulan-list"></div>
+</div>
+
+<script>
+    // =============================================
+    // CONFIG: Ambil userId dari localStorage / session
+    // Sesuaikan dengan cara autentikasi project kamu
+    // =============================================
+    const userId = localStorage.getItem('userId') || 2; // fallback ke seller demo
+
+    const BASE_URL = '/api/report/dashboard?userId=' + userId;
+
+    function formatRupiah(angka) {
+        return 'Rp ' + Number(angka).toLocaleString('id-ID');
+    }
+
+    function formatTanggal(iso) {
+        const d = new Date(iso);
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    async function loadReport() {
+        try {
+            const res = await fetch(BASE_URL);
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg);
+            }
+            const data = await res.json();
+            renderDashboard(data);
+        } catch (err) {
+            document.getElementById('error-msg').style.display = 'block';
+            document.getElementById('error-msg').textContent = 'Gagal memuat laporan: ' + err.message;
+            document.getElementById('stat-grid').innerHTML = '';
+        }
+    }
+
+    function renderDashboard(data) {
+        // Nama toko
+        document.getElementById('nama-toko').textContent = data.namaToko;
+
+        // Stat cards
+        document.getElementById('stat-grid').innerHTML = `
+            <div class="stat-card">
+                <div class="label">Total Penjualan</div>
+                <div class="value">${data.totalPenjualanKeseluruhan}</div>
+                <div class="sub">transaksi berhasil</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Total Pendapatan</div>
+                <div class="value" style="font-size:1.25rem">${formatRupiah(data.totalPendapatanKeseluruhan)}</div>
+                <div class="sub">dari semua transaksi</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Rata-rata per Transaksi</div>
+                <div class="value" style="font-size:1.25rem">${formatRupiah(data.rataRataPerTransaksi)}</div>
+                <div class="sub">nilai rata-rata</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Periode Aktif</div>
+                <div class="value">${data.rangkumanPerBulan.length}</div>
+                <div class="sub">bulan dengan penjualan</div>
+            </div>
+        `;
+
+        // Rangkuman per bulan
+        const list = document.getElementById('bulan-list');
+        if (!data.rangkumanPerBulan.length) {
+            list.innerHTML = '<div class="empty">Belum ada data penjualan.</div>';
+            return;
+        }
+
+        list.innerHTML = data.rangkumanPerBulan.map((b, i) => `
+            <div class="bulan-card">
+                <div class="bulan-header" onclick="toggleBulan(${i})">
+                    <span class="bulan-label">📆 ${b.label}</span>
+                    <span class="bulan-stats">
+                        ${b.totalPenjualan} penjualan &nbsp;|&nbsp; ${formatRupiah(b.totalPendapatan)}
+                    </span>
+                    <span class="toggle" id="toggle-${i}">▼</span>
+                </div>
+                <table class="invoice-table" id="table-${i}">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Produk</th>
+                            <th>Harga</th>
+                            <th>Metode</th>
+                            <th>Tanggal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${b.invoices.map((inv, j) => `
+                            <tr>
+                                <td>${j + 1}</td>
+                                <td>${inv.namaGame}</td>
+                                <td>${formatRupiah(inv.harga)}</td>
+                                <td><span class="badge">${inv.metodePembayaran}</span></td>
+                                <td>${formatTanggal(inv.waktu)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `).join('');
+    }
+
+    function toggleBulan(i) {
+        const table = document.getElementById('table-' + i);
+        const toggle = document.getElementById('toggle-' + i);
+        const isOpen = table.classList.contains('open');
+        table.classList.toggle('open', !isOpen);
+        toggle.textContent = isOpen ? '▼' : '▲';
+    }
+
+    // Cek akses: hanya seller
+    const userRole = localStorage.getItem('userRole');
+    if (userRole && userRole !== 'SELLER') {
+        document.querySelector('.container').innerHTML =
+            '<div class="empty" style="color:#c00">⛔ Halaman ini hanya untuk penjual.</div>';
+    } else {
+        loadReport();
+    }
+</script>
+
+</body>
+</html>
