@@ -7,7 +7,7 @@ const roomId = "1";
 const token = localStorage.getItem('jwt');
 
 let stompClient = null;
-let subscription = null; // ← tambahan
+let subscription = null; 
 
 function renderBubble(isi, isMine) {
     const row = document.createElement('div');
@@ -27,6 +27,12 @@ function scrollToBottom() {
 }
 
 function connect() {
+
+    if (stompClient && stompClient.connected) {
+        console.log("Sudah terkoneksi, skip connect()");
+        return;
+    }
+
     const socket = new SockJS("/ws-chat");
     stompClient = Stomp.over(socket);
 
