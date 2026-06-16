@@ -5,49 +5,61 @@
 package com.loginyuk.backend.model;
 
 /**
+ * DTO (Data Transfer Object) untuk pesan WebSocket.
+ * Class ini BUKAN entity DB — hanya dipakai untuk komunikasi
+ * antara frontend dan backend via STOMP/WebSocket.
  *
- * @author Callista A. Putri
+ * Untuk persistensi ke DB, lihat ChatMessageEntity.java
  */
 public class ChatMessage {
+
     private String sender;
     private String content;
     private String roomId;
+    private Long senderId;   // ← TAMBAHAN: user_id dari tabel user
     private MessageType type;
 
     public enum MessageType {
         CHAT, JOIN, LEAVE, SYSTEM
     }
 
-    public String getSender() {
-        return sender;
+    public String getSender() { 
+        return sender; 
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setSender(String sender) { 
+        this.sender = sender; 
     }
 
     public String getContent() {
-        return content;
+         return content; 
     }
 
     public void setContent(String content) {
-        this.content = content;
+         this.content = content; 
     }
 
     public String getRoomId() {
-        return roomId;
+         return roomId; 
     }
 
     public void setRoomId(String roomId) {
-        this.roomId = roomId;
+         this.roomId = roomId; 
+    }
+
+    public Long getSenderId() {
+         return senderId; 
+    }
+    
+    public void setSenderId(Long senderId) {
+         this.senderId = senderId; 
     }
 
     public MessageType getType() {
-        return type;
+         return type; 
     }
 
     public void setType(MessageType type) {
-        this.type = type;
+         this.type = type; 
     }
-
 }
