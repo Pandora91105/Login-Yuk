@@ -23,6 +23,7 @@ public class Transaksi {
     private String metodePembayaran;
     private String status;
     private LocalDateTime waktuTransaksi;
+    private Double harga;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -36,4 +37,6 @@ public class Transaksi {
     public void setStatus(String status) { this.status = status; }
     public LocalDateTime getWaktuTransaksi() { return waktuTransaksi; }
     public void setWaktuTransaksi(LocalDateTime waktuTransaksi) { this.waktuTransaksi = waktuTransaksi; }
+    public Double getHarga() { return harga; }
+    public void setHarga(Double harga) { this.harga = harga; }
 }

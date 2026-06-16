@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Success - Login Yuk</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; color: white; font-family: Arial, sans-serif; }
+    header { background: #0f0f1a; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { color: white; font-size: 20px; letter-spacing: 2px; }
+    .nav-icons { display: flex; gap: 20px; font-size: 24px; cursor: pointer; color: #00e5a0; }
+    .container { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 70px); padding: 30px; }
+    .card { background: #2a5a4a; border-radius: 16px; padding: 40px; width: 100%; max-width: 480px; text-align: center; }
+    .icon-circle { width: 70px; height: 70px; background: #00e5a0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
+    .success-title { color: #00e5a0; font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+    .success-sub { color: #ccc; font-size: 13px; margin-bottom: 25px; line-height: 1.6; }
+    .detail-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; text-align: left; }
+    .detail-table tr { border-bottom: 1px solid #3a7a6a; }
+    .detail-table tr:last-child { border-bottom: none; }
+    .detail-table td { padding: 12px 8px; font-size: 14px; }
+    .detail-table td:first-child { color: white; font-weight: bold; }
+    .detail-table td:last-child { color: white; text-align: right; }
+    .email-box { background: #1e4a3a; border-radius: 8px; padding: 12px; color: #ccc; font-size: 13px; margin-bottom: 20px; }
+    .btn-download { width: 100%; background: #8a4aff; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 12px; transition: opacity 0.2s; }
+    .btn-download:hover { opacity: 0.85; }
+    .btn-return { width: 100%; background: #00e5a0; color: #0f0f1a; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 20px; transition: opacity 0.2s; }
+    .btn-return:hover { opacity: 0.85; }
+    .help-text { color: #aaa; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LOGIN YUK</h1>
+    <div class="nav-icons">
+      <span>💬</span>
+      <span>📋</span>
+      <span>👤</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="icon-circle">✓</div>
+      <div class="success-title">Payment Successful!</div>
+      <div class="success-sub">Your payment has been processed successfully. You will receive a confirmation email shortly.</div>
+
+      <table class="detail-table">
+        <tr>
+          <td>Amount</td>
+          <td id="tdAmount">-</td>
+        </tr>
+        <tr>
+          <td>Transaction ID</td>
+          <td id="tdTxnId">-</td>
+        </tr>
+        <tr>
+          <td>Payment Method</td>
+          <td id="tdMetode">-</td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td id="tdDate">-</td>
+        </tr>
+        <tr>
+          <td>Merchant</td>
+          <td id="tdMerchant">-</td>
+        </tr>
+      </table>
+
+      <div class="email-box">✉ Receipt sent to buyer@example.com</div>
+
+      <button class="btn-download" onclick="downloadReceipt()">⬇ Download Receipt</button>
+      <button class="btn-return" onclick="window.location.href='index.html'">← Return to Store</button>
+
+      <div class="help-text">Need help? Contact our support team at support@loginyuk.com</div>
+    </div>
+  </div>
+
+  <script>
+    function formatRupiah(angka) {
+      return 'Rp ' + Number(angka).toLocaleString('id-ID');
+    }
+
+    function formatTanggal(dateStr) {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem('transaksiData');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+
+      document.getElementById('tdAmount').textContent = formatRupiah(data.game?.harga || 0);
+      document.getElementById('tdTxnId').textContent = 'TXN-' + String(data.id).padStart(9, '0');
+      document.getElementById('tdMetode').textContent = data.metodePembayaran || 'QRIS';
+      document.getElementById('tdDate').textContent = formatTanggal(data.waktuTransaksi);
+      document.getElementById('tdMerchant').textContent = data.game?.seller?.namaToko || 'Login Yuk Store';
+    }
+
+    function downloadReceipt() {
+      const raw = localStorage.getItem('transaksiData');
+      if (!raw) { alert('Data tidak ditemukan.'); return; }
+      const data = JSON.parse(raw);
+
+      const isi = `
+=== INVOICE LOGIN YUK ===
+Transaction ID : TXN-${String(data.id).padStart(9,'0')}
+Game           : ${data.game?.namaGame || '-'}
+Amount         : ${formatRupiah(data.game?.harga || 0)}
+Payment Method : ${data.metodePembayaran || 'QRIS'}
+Date           : ${formatTanggal(data.waktuTransaksi)}
+Merchant       : ${data.game?.seller?.namaToko || 'Login Yuk Store'}
+Status         : ${data.status}
+=========================
+      `.trim();
+
+      const blob = new Blob([isi], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `invoice-TXN-${data.id}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
