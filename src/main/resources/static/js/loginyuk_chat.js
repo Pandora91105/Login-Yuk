@@ -35,6 +35,11 @@ function connect() {
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
+
+        if (subscription) {
+            subscription.unsubscribe();
+        }
+           
         stompClient.subscribe(`/topic/rooms/${roomId}`, function(message) {
 
             console.log("RAW", message.body);
