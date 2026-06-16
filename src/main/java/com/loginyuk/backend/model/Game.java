@@ -1,6 +1,7 @@
 package com.loginyuk.backend.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "game")
@@ -14,6 +15,7 @@ public class Game {
     private String deskripsi;
     private Double harga;
     private String status;
+    
 
     @ManyToOne
     @JoinColumn(name = "seller_id")
@@ -31,4 +33,10 @@ public class Game {
     public void setStatus(String status) { this.status = status; }
     public Seller getSeller() { return seller; }
     public void setSeller(Seller seller) { this.seller = seller; }
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

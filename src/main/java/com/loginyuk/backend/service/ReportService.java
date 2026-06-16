@@ -5,88 +5,116 @@ import com.loginyuk.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
 
-    @Autowired
-    private TransaksiRepository transaksiRepository;
+    @Autowired private TransaksiRepository transaksiRepository;
+    @Autowired private GameRepository gameRepository;
+    @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private ReportRepository reportRepository;
+    private static final List<String> DAFTAR_GAME =
+        List.of("Mobile Legends", "PUBG", "Clash of Clans");
 
-    @Autowired
-    private UserRepository userRepository;
-
-    public Map<String, Object> getReportDashboard(Long userId) {
-        User user = userRepository.findById(userId)
+    public Map<String, Object> getLaporanBulanan(Long sellerId, int bulan, int tahun) {
+        User user = userRepository.findById(sellerId)
                 .orElseThrow(() -> new RuntimeException("User tidak ditemukan"));
-
         if (!"SELLER".equals(user.getRole())) {
             throw new RuntimeException("Akses ditolak: hanya untuk penjual");
         }
 
-        Long sellerId = userId;
+        List<Transaksi> transaksiBulanIni =
+            transaksiRepository.findBySellerIdAndBulanTahun(sellerId, bulan, tahun);
 
-        List<Transaksi> semuaTransaksi = transaksiRepository.findSuccessBySellerId(sellerId);
+        List<Transaksi> berhasil = transaksiBulanIni.stream()
+                .filter(t -> "SUCCESS".equals(t.getStatus())).collect(Collectors.toList());
+        List<Transaksi> batal = transaksiBulanIni.stream()
+                .filter(t -> "CANCELLED".equals(t.getStatus())).collect(Collectors.toList());
 
-        int totalPenjualan = semuaTransaksi.size();
-        double totalPendapatan = semuaTransaksi.stream()
-                .mapToDouble(t -> t.getGame().getHarga())
-                .sum();
-        double rataTransaksi = totalPenjualan > 0 ? totalPendapatan / totalPenjualan : 0;
+        double totalPendapatan = berhasil.stream().mapToDouble(t -> t.getGame().getHarga()).sum();
+        int totalProdukTerjual = berhasil.size();
+        double rataTransaksi = totalProdukTerjual > 0 ? totalPendapatan / totalProdukTerjual : 0;
 
-        Map<String, Map<String, Object>> perBulan = new LinkedHashMap<>();
-        for (Transaksi t : semuaTransaksi) {
-            int bulan = t.getWaktuTransaksi().getMonthValue();
-            int tahun = t.getWaktuTransaksi().getYear();
-            String key = tahun + "-" + String.format("%02d", bulan);
+        Map<String, Long> produkTerjual = berhasil.stream()
+                .collect(Collectors.groupingBy(t -> t.getGame().getNamaGame(), Collectors.counting()));
 
-            perBulan.computeIfAbsent(key, k -> {
-                Map<String, Object> m = new LinkedHashMap<>();
-                m.put("bulan", bulan);
-                m.put("tahun", tahun);
-                m.put("label", getNamaBulan(bulan) + " " + tahun);
-                m.put("totalPenjualan", 0);
-                m.put("totalPendapatan", 0.0);
-                m.put("invoices", new ArrayList<Map<String, Object>>());
-                return m;
-            });
+        List<Game> gameTersedia = gameRepository.findBySellerIdAndStatus(sellerId, "AVAILABLE");
+        Map<String, Long> produkTidakTerjual = gameTersedia.stream()
+                .collect(Collectors.groupingBy(Game::getNamaGame, Collectors.counting()));
 
-            Map<String, Object> data = perBulan.get(key);
-            data.put("totalPenjualan", (int) data.get("totalPenjualan") + 1);
-            data.put("totalPendapatan", (double) data.get("totalPendapatan") + t.getGame().getHarga());
-
-            Map<String, Object> invoiceDetail = new LinkedHashMap<>();
-            invoiceDetail.put("transaksiId", t.getId());
-            invoiceDetail.put("namaGame", t.getGame().getNamaGame());
-            invoiceDetail.put("harga", t.getGame().getHarga());
-            invoiceDetail.put("metodePembayaran", t.getMetodePembayaran());
-            invoiceDetail.put("waktu", t.getWaktuTransaksi().toString());
-            ((List<Map<String, Object>>) data.get("invoices")).add(invoiceDetail);
-        }
+        Map<String, int[]> stokBarang = hitungStokDinamis(sellerId, bulan, tahun);
 
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("namaToko", getNamaToko(sellerId));
-        result.put("totalPenjualanKeseluruhan", totalPenjualan);
-        result.put("totalPendapatanKeseluruhan", totalPendapatan);
-        result.put("rataRataPerTransaksi", rataTransaksi);
-        result.put("rangkumanPerBulan", new ArrayList<>(perBulan.values()));
+        result.put("bulan", getNamaBulan(bulan));
+        result.put("tahun", tahun);
+        result.put("tanggalCetak", LocalDateTime.now().toString());
+
+        Map<String, Object> ringkasanKeuangan = new LinkedHashMap<>();
+        ringkasanKeuangan.put("totalPendapatan", totalPendapatan);
+        ringkasanKeuangan.put("totalProdukTerjual", totalProdukTerjual);
+        ringkasanKeuangan.put("rataTransaksi", rataTransaksi);
+        result.put("ringkasanKeuangan", ringkasanKeuangan);
+
+        Map<String, Object> detailPemesanan = new LinkedHashMap<>();
+        detailPemesanan.put("berhasil", berhasil.size());
+        detailPemesanan.put("batal", batal.size());
+        result.put("detailPemesanan", detailPemesanan);
+
+        result.put("produkTerjual", lengkapiSemuaGame(produkTerjual));
+        result.put("produkTidakTerjual", lengkapiSemuaGame(produkTidakTerjual));
+        result.put("stokBarang", stokBarang);
 
         return result;
     }
 
-    private String getNamaBulan(int bulan) {
-        String[] bulanArr = {"", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                             "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
-        return bulanArr[bulan];
+    // ===== Kalkulasi stok dinamis (opsi 2) =====
+    private Map<String, int[]> hitungStokDinamis(Long sellerId, int bulan, int tahun) {
+        YearMonth ym = YearMonth.of(tahun, bulan);
+        LocalDateTime akhirBulan = ym.atEndOfMonth().atTime(23, 59, 59);
+        LocalDateTime awalBulan = ym.atDay(1).atStartOfDay();
+
+        // Semua game seller yang sudah dibuat sampai akhir bulan ini
+        List<Game> gameSampaiAkhirBulan =
+            gameRepository.findBySellerIdAndStatus(sellerId,"AVAILABLE");
+
+        // Semua transaksi SUCCESS sampai akhir bulan ini
+        List<Transaksi> terjualSampaiAkhirBulan =
+            transaksiRepository.findSuccessBySellerIdBefore(sellerId, akhirBulan);
+
+        // Transaksi SUCCESS yang terjadi SELAMA bulan ini saja
+        List<Transaksi> terjualSelamaBulanIni = terjualSampaiAkhirBulan.stream()
+                .filter(t -> !t.getWaktuTransaksi().isBefore(awalBulan))
+                .collect(Collectors.toList());
+
+        Map<String, int[]> hasil = new LinkedHashMap<>();
+        for (String nama : DAFTAR_GAME) {
+            long dibuat = gameSampaiAkhirBulan.stream()
+                    .filter(g -> nama.equals(g.getNamaGame())).count();
+            long terjualTotal = terjualSampaiAkhirBulan.stream()
+                    .filter(t -> nama.equals(t.getGame().getNamaGame())).count();
+            long terjualBulanIni = terjualSelamaBulanIni.stream()
+                    .filter(t -> nama.equals(t.getGame().getNamaGame())).count();
+
+            int stokAkhir = (int) (dibuat - terjualTotal);
+            int stokAwal = stokAkhir + (int) terjualBulanIni;
+
+            hasil.put(nama, new int[]{Math.max(stokAwal, 0), Math.max(stokAkhir, 0)});
+        }
+        return hasil;
     }
 
-    private String getNamaToko(Long sellerId) {
-        return reportRepository.findBySellerId(sellerId).stream()
-                .findFirst()
-                .map(r -> r.getSeller().getNamaToko())
-                .orElse("Toko Saya");
+    private Map<String, Long> lengkapiSemuaGame(Map<String, Long> data) {
+        Map<String, Long> hasil = new LinkedHashMap<>();
+        for (String nama : DAFTAR_GAME) hasil.put(nama, data.getOrDefault(nama, 0L));
+        return hasil;
+    }
+
+    private String getNamaBulan(int bulan) {
+        String[] arr = {"", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                        "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+        return arr[bulan];
     }
 }
