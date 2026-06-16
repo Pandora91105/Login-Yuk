@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi - Penjual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        :root {
+            --primary: #222223;
+            --secondary: #0E0C13;
+            --accent: #65F1CE;
+            --accent-dark: #0B8A6A;
+            --text-main: #FFFFFF;
+        }
+ 
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--secondary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+ 
+        /* NAVBAR */
+        nav {
+            background-color: rgba(20, 18, 28, 0.85);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+ 
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 20px;
+            border-radius: 999px;
+            border: 1.5px solid transparent;
+            transition: background 0.2s, border-color 0.2s;
+        }
+ 
+        nav a:hover {
+            border-color: var(--accent);
+        }
+ 
+        nav a.active {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+ 
+        /* MAIN LAYOUT */
+        .page {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        /* LEFT — hero image */
+        .hero {
+            flex: 0 0 50%;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+ 
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(14,12,19,0.15) 0%, rgba(14,12,19,0.75) 100%);
+        }
+ 
+        /* RIGHT — form */
+        .form-side {
+            flex: 0 0 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(18, 16, 26, 0.95);
+            padding: 48px 64px;
+        }
+ 
+        .form-box {
+            width: 100%;
+            max-width: 360px;
+        }
+ 
+        .form-box h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: var(--text-main);
+        }
+ 
+        .form-group {
+            margin-bottom: 14px;
+        }
+ 
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 7px;
+            color: var(--text-main);
+        }
+ 
+        .form-group input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: none;
+            background-color: var(--accent);
+            color: var(--secondary);
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+ 
+        .form-group input::placeholder {
+            color: rgba(14,12,19,0.4);
+        }
+ 
+        .form-group input:focus {
+            box-shadow: 0 0 0 3px rgba(101,241,206,0.35);
+        }
+ 
+        /* Buyer link */
+        .buyer-link {
+            margin: 14px 0 4px;
+            font-size: 13px;
+            color: #ccc;
+        }
+ 
+        .buyer-link a {
+            color: #ccc;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+ 
+        .buyer-link a:hover {
+            color: var(--accent);
+        }
+ 
+        /* Register button */
+        .btn-register {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 13px;
+            border-radius: 999px;
+            border: none;
+            background-color: var(--accent);
+            color: var(--secondary);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+ 
+        .btn-register:hover {
+            background-color: #4de0bb;
+            transform: translateY(-1px);
+        }
+ 
+        .btn-register:active {
+            transform: translateY(0);
+        }
+ 
+        /* Alert */
+        .alert {
+            display: none;
+            margin-top: 14px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+        }
+        .alert.error   { background: rgba(255,80,80,0.15); color: #ff8080; }
+        .alert.success { background: rgba(101,241,206,0.15); color: var(--accent); }
+    </style>
+</head>
+<body>
+ 
+    <!-- NAVBAR -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">FAQ</a>
+        <a href="login.html" class="active">Sign In</a>
+    </nav>
+ 
+    <!-- MAIN -->
+    <div class="page">
+ 
+        <!-- Hero image kiri -->
+        <div class="hero">
+            <img src="/assets/image_14.png" alt="Hero character">
+        </div>
+ 
+        <!-- Form kanan -->
+        <div class="form-side">
+            <div class="form-box">
+                <h1>REGISTER</h1>
+ 
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email">
+                </div>
+ 
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username">
+                </div>
+ 
+                <div class="form-group">
+                    <label for="namaToko">Nama Toko</label>
+                    <input type="text" id="namaToko" placeholder="Masukkan nama toko">
+                </div>
+ 
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password">
+                </div>
+ 
+                <div class="form-group">
+                    <label for="confirmPassword">confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Ulangi password">
+                </div>
+ 
+                <p class="buyer-link">Register as Buyer? <a href="register-buyer.html">Click Here</a></p>
+ 
+                <button class="btn-register" onclick="handleRegister()">REGISTER</button>
+                <div class="alert" id="alertMsg"></div>
+            </div>
+        </div>
+ 
+    </div>
+ 
+    <script>
+        async function handleRegister() {
+            const email       = document.getElementById('email').value.trim();
+            const username    = document.getElementById('username').value.trim();
+            const namaToko    = document.getElementById('namaToko').value.trim();
+            const password    = document.getElementById('password').value;
+            const confirm     = document.getElementById('confirmPassword').value;
+ 
+            if (!email || !username || !namaToko || !password || !confirm) {
+                showAlert('Semua field wajib diisi.', 'error');
+                return;
+            }
+ 
+            if (password !== confirm) {
+                showAlert('Password dan konfirmasi tidak cocok.', 'error');
+                return;
+            }
+ 
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, username, password })
+                });
+ 
+                const text = await res.text();
+ 
+                if (res.ok) {
+                    showAlert(text, 'success');
+                    setTimeout(() => window.location.href = 'login.html', 1200);
+                } else {
+                    showAlert(text, 'error');
+                }
+            } catch (err) {
+                showAlert('Tidak dapat terhubung ke server.', 'error');
+            }
+        }
+ 
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') handleRegister();
+        });
+ 
+        function showAlert(msg, type) {
+            const el = document.getElementById('alertMsg');
+            el.textContent = msg;
+            el.className = 'alert ' + type;
+            el.style.display = 'block';
+        }
+    </script>
+ 
+</body>
+</html>

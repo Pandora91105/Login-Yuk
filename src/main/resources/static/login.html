@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Login Yuk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        :root {
+            --primary: #222223;
+            --secondary: #0E0C13;
+            --accent: #65F1CE;
+            --accent-dark: #0B8A6A;
+            --text-main: #FFFFFF;
+            --pink-btn: #C97AC9;
+        }
+ 
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--secondary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+ 
+        /* NAVBAR */
+        nav {
+            background-color: rgba(20, 18, 28, 0.85);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+ 
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 20px;
+            border-radius: 999px;
+            border: 1.5px solid transparent;
+            transition: background 0.2s, border-color 0.2s;
+        }
+ 
+        nav a:hover {
+            border-color: var(--accent);
+        }
+ 
+        nav a.active {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+ 
+        /* MAIN LAYOUT */
+        .page {
+            flex: 1;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        /* LEFT — hero image */
+        .hero {
+            flex: 0 0 50%;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+ 
+        /* dark gradient overlay agar menyatu ke kanan */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(14,12,19,0.15) 0%, rgba(14,12,19,0.75) 100%);
+        }
+ 
+        /* RIGHT — form */
+        .form-side {
+            flex: 0 0 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(18, 16, 26, 0.95);
+            padding: 48px 64px;
+        }
+ 
+        .form-box {
+            width: 100%;
+            max-width: 360px;
+        }
+ 
+        .form-box h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 36px;
+            color: var(--text-main);
+        }
+ 
+        .form-group {
+            margin-bottom: 20px;
+        }
+ 
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+ 
+        .form-group input {
+            width: 100%;
+            padding: 13px 18px;
+            border-radius: 999px;
+            border: none;
+            background-color: var(--accent);
+            color: var(--secondary);
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+ 
+        .form-group input::placeholder {
+            color: rgba(14,12,19,0.45);
+        }
+ 
+        .form-group input:focus {
+            box-shadow: 0 0 0 3px rgba(101,241,206,0.35);
+        }
+ 
+        /* Register links */
+        .register-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+ 
+        .register-section p {
+            font-size: 13px;
+            color: #ccc;
+            margin-bottom: 12px;
+        }
+ 
+        .register-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+ 
+        .register-btns a {
+            padding: 9px 26px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            background-color: var(--pink-btn);
+            color: var(--text-main);
+            transition: opacity 0.2s, transform 0.15s;
+        }
+ 
+        .register-btns a:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+ 
+        /* Login button */
+        .btn-login {
+            display: block;
+            width: 100%;
+            margin-top: 28px;
+            padding: 13px;
+            border-radius: 999px;
+            border: none;
+            background-color: var(--accent);
+            color: var(--secondary);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+ 
+        .btn-login:hover {
+            background-color: #4de0bb;
+            transform: translateY(-1px);
+        }
+ 
+        .btn-login:active {
+            transform: translateY(0);
+        }
+ 
+        /* Alert message */
+        .alert {
+            display: none;
+            margin-top: 14px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+        }
+        .alert.error   { background: rgba(255,80,80,0.15); color: #ff8080; }
+        .alert.success { background: rgba(101,241,206,0.15); color: var(--accent); }
+    </style>
+</head>
+<body>
+ 
+    <!-- NAVBAR -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">FAQ</a>
+        <a href="login.html" class="active">Sign In</a>
+    </nav>
+ 
+    <!-- MAIN -->
+    <div class="page">
+ 
+        <!-- Hero image kiri -->
+        <div class="hero">
+            <!--
+                Ganti src di bawah dengan path gambar hero kalian,
+                misalnya: src="/assets/image_14.png"
+            -->
+            <img src="/assets/image_14.png" alt="Hero character">
+        </div>
+ 
+        <!-- Form kanan -->
+        <div class="form-side">
+            <div class="form-box">
+                <h1>SIGN IN</h1>
+ 
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username">
+                </div>
+ 
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password">
+                </div>
+ 
+                <div class="register-section">
+                    <p>Dont have an account? Register</p>
+                    <div class="register-btns">
+                        <a href="register_seller.html">As a Seller</a>
+                        <a href="register_buyer.html">As a Buyer</a>
+                    </div>
+                </div>
+ 
+                <button class="btn-login" onclick="handleLogin()">LOGIN</button>
+                <div class="alert" id="alertMsg"></div>
+            </div>
+        </div>
+ 
+    </div>
+ 
+    <script>
+        async function handleLogin() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const alertEl = document.getElementById('alertMsg');
+ 
+            alertEl.style.display = 'none';
+ 
+            if (!username || !password) {
+                showAlert('Username dan password wajib diisi.', 'error');
+                return;
+            }
+ 
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+ 
+                const text = await res.text();
+ 
+                if (res.ok) {
+                    showAlert("Login berhasil", "success");
+
+                    // Redirect setelah login berhasil, sesuaikan URL tujuan
+                    setTimeout(() => window.location.href = "/index.html", 1000);
+                } else {
+                    showAlert(text, 'error');
+                }
+            } catch (err) {
+                showAlert('Tidak dapat terhubung ke server.', 'error');
+            }
+        }
+ 
+        function showAlert(msg, type) {
+            const el = document.getElementById('alertMsg');
+            el.textContent = msg;
+            el.className = 'alert ' + type;
+            el.style.display = 'block';
+        }
+ 
+        // Enter key support
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') handleLogin();
+        });
+    </script>
+ 
+</body>
+</html>
