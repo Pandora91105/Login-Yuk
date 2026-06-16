@@ -2,14 +2,9 @@ package com.loginyuk.backend.repository;
 
 import com.loginyuk.backend.model.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
     List<Game> findByStatus(String status);
-
-    List<Game> findBySellerIdAndStatus(Long sellerId, String akhirBulan);
-
-    List<Game> findBySellerIdAndStatus(Long sellerId, LocalDateTime akhirBulan);
+    List<Game> findBySellerIdAndStatus(Long sellerId, String status);
 }
