@@ -36,31 +36,23 @@ public class ChatController {
      */
     @MessageMapping("/chat.send")
     public void sendToRoom(@Payload ChatMessage message) {
-        System.out.println("Received:");
-        System.out.println("sender   = " + message.getSender());
-        System.out.println("content  = " + message.getContent());
-        System.out.println("roomId   = " + message.getRoomId());
- 
+        System.out.println("=== sendToRoom called ===");
+
+        // Broadcast SEKALI saja
         messagingTemplate.convertAndSend(
             "/topic/rooms/" + message.getRoomId(), message
         );
 
-        // Simpan ke database
-        // Catatan: message.getRoomId() adalah String dari ChatMessage DTO,
-        // pastikan frontend mengirim roomId yang valid (angka).
+        // Simpan ke DB
         try {
-            Long roomId   = Long.parseLong(message.getRoomId());
-            Long senderId = message.getSenderId(); // lihat catatan di bawah
-            chatService.saveMessage(roomId, senderId, message.getContent());
+            Long roomId = Long.parseLong(message.getRoomId());
+            Long senderId = message.getSenderId();
+            if (senderId != null) {
+                chatService.saveMessage(roomId, senderId, message.getContent());
+            }
         } catch (NumberFormatException e) {
             System.err.println("roomId bukan angka valid: " + message.getRoomId());
         }
-
-        // Broadcast ke semua subscriber room ini
-        messagingTemplate.convertAndSend(
-            "/topic/rooms/" + message.getRoomId(),
-            message
-        );
     }
 
     /**
