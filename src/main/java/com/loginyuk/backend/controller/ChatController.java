@@ -40,6 +40,10 @@ public class ChatController {
         System.out.println("sender   = " + message.getSender());
         System.out.println("content  = " + message.getContent());
         System.out.println("roomId   = " + message.getRoomId());
+ 
+        messagingTemplate.convertAndSend(
+            "/topic/rooms/" + message.getRoomId(), message
+        );
 
         // Simpan ke database
         // Catatan: message.getRoomId() adalah String dari ChatMessage DTO,
