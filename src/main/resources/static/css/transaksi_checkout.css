@@ -1,0 +1,210 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#02010f;
+    color:white;
+    min-height:100vh;
+}
+
+/* NAVBAR */
+
+.navbar{
+    height:85px;
+    background:#202020;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 40px;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.nav-icons{
+    display:flex;
+    gap:25px;
+}
+
+.nav-icons a{
+    color:#63f1d0;
+    text-decoration:none;
+    font-size:30px;
+}
+
+/* CONTENT */
+
+.container{
+    width:95%;
+    margin:auto;
+    padding:40px 0;
+}
+
+.title{
+    margin-bottom:30px;
+    font-size:38px;
+}
+
+.detail-section{
+    display:flex;
+    gap:50px;
+    align-items:flex-start;
+}
+
+/* IMAGE */
+
+.game-image img{
+    width:220px;
+    height:220px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+/* DESCRIPTION */
+
+.description{
+    flex:1;
+    line-height:1.8;
+}
+
+.description h2{
+    margin-bottom:10px;
+}
+
+.description ul{
+    margin-left:20px;
+}
+
+/* ADVANTAGES */
+
+.advantages{
+    width:420px;
+}
+
+.advantages h2{
+    margin-bottom:15px;
+}
+
+.advantages ul{
+    list-style:none;
+    line-height:2;
+}
+
+.price-box{
+    margin-top:60px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.price-box span:first-child{
+    font-size:40px;
+    font-weight:bold;
+}
+
+.price{
+    font-size:48px;
+    font-weight:bold;
+    color:#2dd4bf;
+}
+
+/* NOTE */
+
+.note{
+    margin:30px 0;
+    font-size:20px;
+}
+
+/* PAYMENT */
+
+.payment-section{
+    background:#242424;
+    padding:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.agreement{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.agreement input{
+    width:25px;
+    height:25px;
+}
+
+.agreement span{
+    color:#4ade80;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.payment-method{
+    font-size:22px;
+}
+
+/* BOTTOM */
+
+.bottom-section{
+    margin-top:220px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.total-price{
+    font-size:55px;
+    font-weight:bold;
+}
+
+.total-price span{
+    color:#2dd4bf;
+}
+
+.checkout-btn{
+    width:300px;
+    height:80px;
+    border:none;
+    border-radius:20px;
+    background:#5eead4;
+    color:white;
+    font-size:40px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.checkout-btn:hover{
+    opacity:0.9;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1200px){
+
+    .detail-section{
+        flex-direction:column;
+    }
+
+    .advantages{
+        width:100%;
+    }
+
+    .bottom-section{
+        flex-direction:column;
+        gap:30px;
+    }
+
+    .total-price{
+        font-size:40px;
+    }
+}

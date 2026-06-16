@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran QRIS - Login Yuk</title>
+
+    <link rel="stylesheet" th:href="@{/css/transaksi_qris.css}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+
+    <div class="logo">
+        LOGIN YUK
+    </div>
+
+    <div class="nav-icons">
+        <a href="#">💬</a>
+        <a href="#">📋</a>
+        <a href="#">👤</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="payment-card">
+
+        <h1>Pembayaran QRIS</h1>
+
+        <p class="note">
+            Note : Pesanan akan otomatis dibatalkan apabila pembayaran tidak diselesaikan.
+        </p>
+
+        <!-- QR DUMMY -->
+        <div class="qr-container">
+
+            <img th:src="@{/images/qris.png}"
+                 alt="QRIS">
+
+        </div>
+
+        <!-- COUNTDOWN DARI BACKEND -->
+        <div class="countdown">
+
+            <h3>Bayar dalam waktu :</h3>
+
+            <span th:text="${sisaWaktu}">
+                29:58
+            </span>
+
+        </div>
+
+        <!-- DETAIL TRANSAKSI -->
+
+        <div class="transaction-detail">
+
+            <div class="row">
+                <span>Transaction ID</span>
+
+                <strong th:text="${transaksi.transaksiId}">
+                    TRX-0001
+                </strong>
+            </div>
+
+            <div class="row">
+                <span>Game</span>
+
+                <strong th:text="${game.namaGame}">
+                    Mobile Legends
+                </strong>
+            </div>
+
+            <div class="row">
+                <span>Metode Pembayaran</span>
+
+                <strong>QRIS</strong>
+            </div>
+
+            <div class="row">
+                <span>Total Pembayaran</span>
+
+                <strong
+                th:text="'Rp ' + ${#numbers.formatInteger(transaksi.harga,0,'POINT')}">
+                    Rp 250.000
+                </strong>
+            </div>
+
+        </div>
+
+        <!-- TOMBOL SUDAH BAYAR -->
+
+        <div class="button-group">
+
+            <form th:if="${transaksi.status != 'EXPIRED'}"
+                  th:action="@{/transaksi/success/{id}(id=${transaksi.transaksiId})}"
+                  method="post">
+
+                <button class="paid-btn" type="submit">
+                    Sudah Bayar
+                </button>
+
+            </form>
+
+            <button th:if="${transaksi.status == 'EXPIRED'}"
+                    class="expired-btn"
+                    disabled>
+
+                Pembayaran Kedaluwarsa
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
