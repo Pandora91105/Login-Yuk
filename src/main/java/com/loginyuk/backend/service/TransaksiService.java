@@ -40,6 +40,7 @@ public class TransaksiService {
         transaksi.setMetodePembayaran(req.getMetodePembayaran());
         transaksi.setStatus("PENDING");
         transaksi.setWaktuTransaksi(LocalDateTime.now());
+        transaksi.setHarga(game.getHarga());
         transaksi = transaksiRepository.save(transaksi);
 
         game.setStatus("SOLD");
