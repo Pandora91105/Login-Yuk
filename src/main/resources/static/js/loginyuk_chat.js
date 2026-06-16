@@ -10,6 +10,9 @@ const token = localStorage.getItem('jwt');
 let stompClient = null;
 
 function renderBubble(isi, isMine) {
+    console.log("renderBubble called", isi, isMine);       // ← tambah ini
+    console.log("chatMessages el:", chatMessages); 
+
     const row = document.createElement('div');
     row.classList.add('bubble-row', isMine ? 'mine' : 'theirs');
 
