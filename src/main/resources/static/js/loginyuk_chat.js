@@ -79,10 +79,11 @@ function getUserId() {
 function sendMessage() {
     const isi = messageInput.value.trim();
     if (isi === '' || !stompClient) return;
-
+    const username = getCurrentUsername(); // ← pastikan baris ini ada
+    const userId = getUserId();
     const chatMessage = {
         sender: username,     
-        senderId: getUserId(),
+        senderId: userId,
         content: isi,
         roomId: roomId,
         type: 'CHAT'
