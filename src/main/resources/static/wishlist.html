@@ -1,97 +1,284 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist - Login Yuk</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/wishlist.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wishlist</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#1f1f1f;
+    color:white;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* HEADER */
+
+.header{
+    height:80px;
+    background:#242424;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:white;
+}
+
+/* TITLE */
+
+.title-section{
+    background:#050511;
+    padding:30px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.title-section h1{
+    color:#63d4bd;
+    font-size:40px;
+}
+
+.search{
+    width:500px;
+    padding:15px 20px;
+    border:none;
+    border-radius:30px;
+    outline:none;
+}
+
+/* CONTENT */
+
+.content{
+    height:calc(100vh - 170px);
+    display:flex;
+    flex-direction:column;
+    padding:20px;
+}
+
+/* HEADER TABLE */
+
+.table-header{
+    display:grid;
+    grid-template-columns:3fr 1fr 1fr 1fr 1fr 1fr;
+    background:#111;
+    padding:15px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* PRODUCT LIST */
+
+.product-list{
+    flex:1;
+    overflow-y:auto;
+    margin-top:10px;
+}
+
+.product-list::-webkit-scrollbar{
+    width:8px;
+}
+
+.product-list::-webkit-scrollbar-thumb{
+    background:#63d4bd;
+    border-radius:20px;
+}
+
+.store-box{
+    background:#2a2a2a;
+    margin-bottom:15px;
+}
+
+.store-name{
+    padding:15px;
+    border-bottom:1px solid #444;
+    font-weight:bold;
+}
+
+.product-row{
+    display:grid;
+    grid-template-columns:3fr 1fr 1fr 1fr 1fr 1fr;
+    align-items:center;
+    padding:20px;
+}
+
+.product-info{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.product-info img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+}
+
+.status{
+    background:#77e06c;
+    text-align:center;
+    padding:8px;
+    border-radius:20px;
+    width:120px;
+    margin:auto;
+}
+
+.price,
+.qty,
+.total{
+    text-align:center;
+    font-weight:bold;
+}
+
+.delete-btn{
+    border:none;
+    background:#5a4848;
+    color:#ff7d7d;
+    padding:10px 20px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+/* FOOTER */
+
+.footer-checkout{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:90px;
+    background:#262626;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+}
+
+.checkout-btn{
+    border:none;
+    background:#84d9c4;
+    color:white;
+    padding:15px 40px;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+</style>
+
 </head>
 <body>
-    <main class="wishlist-page">
-        <nav class="navbar">
-            <a class="navbar-logo" href="loginYuk_chat.html">LOGIN YUK</a>
 
-            <div class="navbar-icons">
-                <a href="loginYuk_chat.html" aria-label="Chat"><i class="fa-solid fa-comment"></i></a>
-                <a href="wishlist.html" class="active" aria-label="Wishlist"><i class="fa-solid fa-clipboard-list"></i></a>
-                <a href="#" aria-label="Profile"><i class="fa-solid fa-circle-user"></i></a>
+<header class="header">
+    <div class="logo">
+        LOGIN YUK
+    </div>
+</header>
+
+<section class="title-section">
+
+    <h1>My Wishlist</h1>
+
+    <input
+        type="text"
+        class="search"
+        placeholder="Cari Produk..."
+    >
+
+</section>
+
+<div class="content">
+
+    <div class="table-header">
+        <div>Product</div>
+        <div>Status</div>
+        <div>Price</div>
+        <div>Qty</div>
+        <div>Total</div>
+        <div>Action</div>
+    </div>
+
+    <div class="product-list">
+
+        <% for(int i=1; i<=20; i++){ %>
+
+        <div class="store-box">
+
+            <div class="store-name">
+                Store <%=i%>
             </div>
-        </nav>
 
-        <section class="wishlist-hero">
-            <h1>My Wishlist</h1>
-            <label class="wishlist-search" aria-label="Cari wishlist">
-                <input id="wishlistSearch" type="search" autocomplete="off">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </label>
-        </section>
+            <div class="product-row">
 
-        <div class="wishlist-strip"></div>
+                <div class="product-info">
 
-        <section class="wishlist-content">
-            <div class="wishlist-head" aria-hidden="true">
-                <span>Product</span>
-                <span>Status</span>
-                <span>Price</span>
-                <span>Qty</span>
-                <span>Total</span>
-                <span>Action</span>
+                    <img src="https://picsum.photos/200?random=<%=i%>">
+
+                    <div>
+                        <h3>Product <%=i%></h3>
+                    </div>
+
+                </div>
+
+                <div>
+                    <div class="status">
+                        Available
+                    </div>
+                </div>
+
+                <div class="price">
+                    Rp 100.000
+                </div>
+
+                <div class="qty">
+                    1
+                </div>
+
+                <div class="total">
+                    Rp 100.000
+                </div>
+
+                <div>
+                    <button class="delete-btn">
+                        Hapus
+                    </button>
+                </div>
+
             </div>
 
-            <div id="wishlistList" class="wishlist-list">
-                <p class="wishlist-message">Memuat wishlist...</p>
-            </div>
-        </section>
-
-        <footer class="checkout-bar">
-            <label class="select-all">
-                <span class="checkbox-wrap">
-                    <input id="selectAll" type="checkbox">
-                    <span class="checkbox-box"></span>
-                </span>
-                <span>Select All</span>
-            </label>
-            <strong id="checkoutTotal">Total (0 Product) : Rp 0</strong>
-            <button class="checkout-button" type="button">Check Out</button>
-        </footer>
-    </main>
-
-    <template id="storeTemplate">
-        <article class="store-card" data-card>
-            <div class="store-header">
-                <label class="checkbox-wrap">
-                    <input type="checkbox" data-store>
-                    <span class="checkbox-box"></span>
-                </label>
-                <strong data-store-name>Store name</strong>
-            </div>
-            <div class="store-products" data-products></div>
-        </article>
-    </template>
-
-    <template id="rowTemplate">
-        <div class="wishlist-row" data-row>
-            <div class="product-cell">
-                <label class="checkbox-wrap">
-                    <input type="checkbox" data-item>
-                    <span class="checkbox-box"></span>
-                </label>
-                <img src="assets/image_14.png" alt="" class="product-thumb">
-                <strong class="product-name" data-name></strong>
-            </div>
-            <span class="status-pill" data-status>Tersedia</span>
-            <span class="money" data-price></span>
-            <span class="qty">1</span>
-            <span class="money" data-total></span>
-            <button class="delete-button" type="button" data-delete>Hapus</button>
         </div>
-    </template>
 
-    <script src="js/wishlist.js"></script>
+        <% } %>
+
+    </div>
+
+</div>
+
+<footer class="footer-checkout">
+
+    <h3>
+        Total (20 Product)
+    </h3>
+
+    <button class="checkout-btn">
+        Check Out
+    </button>
+
+</footer>
+
 </body>
 </html>
