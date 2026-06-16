@@ -58,10 +58,22 @@ function connect() {
 }
 
 function getCurrentUsername() {
-    // Decode from JWT or store separately at login
+    if (!token) return 'anonymous';
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.sub;
+    } catch (e) {
+        return 'anonymous';
+    }
+}
+function getUserId() {
     if (!token) return null;
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.sub;
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.userId;
+    } catch (e) {
+        return null;
+    }
 }
 
 function sendMessage() {
@@ -69,6 +81,8 @@ function sendMessage() {
     if (isi === '' || !stompClient) return;
 
     const chatMessage = {
+        sender: username,     
+        senderId: getUserId(),
         content: isi,
         roomId: roomId,
         type: 'CHAT'

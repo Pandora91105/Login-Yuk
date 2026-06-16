@@ -6,6 +6,7 @@ import com.loginyuk.backend.service.ChatService;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -83,7 +84,7 @@ public class ChatController {
 
     // ── Private message (tidak berubah) ──────────────────────────────────────
     @MessageMapping("/chat.private.{targetUser}")
-    public void sendPrivate(@DestinationVariable String targetUser,
+    public void sendPrivate(@DestinationVariable @NonNull String targetUser,
                             @Payload ChatMessage message, Principal sender) {
         message.setSender(sender.getName());
         messagingTemplate.convertAndSendToUser(targetUser, "/queue/messages", message);
