@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - Login Yuk</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wishlist.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <main class="wishlist-page">
+        <nav class="navbar">
+            <a class="navbar-logo" href="loginYuk_chat.html">LOGIN YUK</a>
+
+            <div class="navbar-icons">
+                <a href="loginYuk_chat.html" aria-label="Chat"><i class="fa-solid fa-comment"></i></a>
+                <a href="wishlist.html" class="active" aria-label="Wishlist"><i class="fa-solid fa-clipboard-list"></i></a>
+                <a href="#" aria-label="Profile"><i class="fa-solid fa-circle-user"></i></a>
+            </div>
+        </nav>
+
+        <section class="wishlist-hero">
+            <h1>My Wishlist</h1>
+            <label class="wishlist-search" aria-label="Cari wishlist">
+                <input id="wishlistSearch" type="search" autocomplete="off">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </label>
+        </section>
+
+        <div class="wishlist-strip"></div>
+
+        <section class="wishlist-content">
+            <div class="wishlist-head" aria-hidden="true">
+                <span>Product</span>
+                <span>Status</span>
+                <span>Price</span>
+                <span>Qty</span>
+                <span>Total</span>
+                <span>Action</span>
+            </div>
+
+            <div id="wishlistList" class="wishlist-list">
+                <p class="wishlist-message">Memuat wishlist...</p>
+            </div>
+        </section>
+
+        <footer class="checkout-bar">
+            <label class="select-all">
+                <span class="checkbox-wrap">
+                    <input id="selectAll" type="checkbox">
+                    <span class="checkbox-box"></span>
+                </span>
+                <span>Select All</span>
+            </label>
+            <strong id="checkoutTotal">Total (0 Product) : Rp 0</strong>
+            <button class="checkout-button" type="button">Check Out</button>
+        </footer>
+    </main>
+
+    <template id="storeTemplate">
+        <article class="store-card" data-card>
+            <div class="store-header">
+                <label class="checkbox-wrap">
+                    <input type="checkbox" data-store>
+                    <span class="checkbox-box"></span>
+                </label>
+                <strong data-store-name>Store name</strong>
+            </div>
+            <div class="store-products" data-products></div>
+        </article>
+    </template>
+
+    <template id="rowTemplate">
+        <div class="wishlist-row" data-row>
+            <div class="product-cell">
+                <label class="checkbox-wrap">
+                    <input type="checkbox" data-item>
+                    <span class="checkbox-box"></span>
+                </label>
+                <img src="assets/image_14.png" alt="" class="product-thumb">
+                <strong class="product-name" data-name></strong>
+            </div>
+            <span class="status-pill" data-status>Tersedia</span>
+            <span class="money" data-price></span>
+            <span class="qty">1</span>
+            <span class="money" data-total></span>
+            <button class="delete-button" type="button" data-delete>Hapus</button>
+        </div>
+    </template>
+
+    <script src="js/wishlist.js"></script>
+</body>
+</html>
