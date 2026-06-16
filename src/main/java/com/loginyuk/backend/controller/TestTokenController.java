@@ -18,9 +18,10 @@ public class TestTokenController {
     private static final String SECRET_KEY = "your-secret-key-here-must-be-long-enough";
 
     @GetMapping("/api/test-token")
-    public String generateTestToken(@RequestParam String username) {
+    public String generateTestToken(@RequestParam String username, @RequestParam Long userId) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("userId", userId)   // ← tambahkan ini
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 3600_000))
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8)))
