@@ -3,241 +3,430 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Penjualan — Login Yuk</title>
+    <title>Laporan Bulanan — Login Yuk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #333; }
 
+        body {
+            font-family: 'League Spartan', sans-serif;
+            background: #0E0C13;
+            color: #FFFFFF;
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
         header {
-            background: #2d6cdf;
-            color: white;
-            padding: 16px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 94px;
+            background: #222223;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding: 0 25px;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
         }
-        header h1 { font-size: 1.3rem; }
 
-        .container { max-width: 960px; margin: 32px auto; padding: 0 16px; }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
+        .nav-logo {
+            font-family: 'Krona One', sans-serif;
+            font-size: 20px;
+            letter-spacing: 0.06em;
+            color: #FFFFFF;
+            text-shadow: 0px 9px 4px rgba(0,0,0,0.25);
         }
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        .stat-card .label { font-size: 0.8rem; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-card .value { font-size: 1.6rem; font-weight: 700; color: #2d6cdf; }
-        .stat-card .sub { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
 
-        h2 { font-size: 1.1rem; margin-bottom: 16px; color: #444; }
-
-        .bulan-list { display: flex; flex-direction: column; gap: 16px; }
-
-        .bulan-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            overflow: hidden;
-        }
-        .bulan-header {
+        .nav-right {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 14px 20px;
-            background: #f7f9fc;
-            border-bottom: 1px solid #eee;
+            gap: 20px;
+        }
+
+        .nav-icon-chat {
+            width: 47px;
+            height: 35px;
+            position: relative;
             cursor: pointer;
         }
-        .bulan-header:hover { background: #eef2fa; }
-        .bulan-header .bulan-label { font-weight: 600; font-size: 1rem; }
-        .bulan-header .bulan-stats { font-size: 0.85rem; color: #666; }
-        .bulan-header .toggle { font-size: 1.2rem; color: #2d6cdf; }
-
-        .invoice-table { width: 100%; border-collapse: collapse; display: none; }
-        .invoice-table.open { display: table; }
-        .invoice-table th {
-            background: #f0f4f8;
-            text-align: left;
-            padding: 10px 16px;
-            font-size: 0.8rem;
-            color: #666;
-            text-transform: uppercase;
+        .nav-icon-chat .bubble {
+            width: 42px;
+            height: 26px;
+            background: #65F2CE;
+            border-radius: 13px;
         }
-        .invoice-table td { padding: 12px 16px; font-size: 0.9rem; border-top: 1px solid #f0f0f0; }
-        .invoice-table tr:hover td { background: #f9fbff; }
-
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 99px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: #e8f0fe;
-            color: #2d6cdf;
+        .nav-icon-chat .tail {
+            width: 16px;
+            height: 14px;
+            background: #65F2CE;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            position: absolute;
+            bottom: 0;
+            right: 3px;
+            transform: rotate(144.34deg);
         }
 
-        .empty { text-align: center; padding: 60px 20px; color: #aaa; }
-        .loading { text-align: center; padding: 60px 20px; color: #888; }
+        .nav-icon-doc {
+            width: 28px;
+            height: 40px;
+            border: 4px solid #65F2CE;
+            border-radius: 7px;
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-icon-doc .lines {
+            padding: 5px 3px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .nav-icon-doc .lines span {
+            display: block;
+            height: 2px;
+            background: #65F2CE;
+            border-radius: 1px;
+        }
 
-        #error-msg {
-            background: #fff0f0;
-            border: 1px solid #fcc;
-            border-radius: 8px;
-            padding: 16px;
-            color: #c00;
+        .nav-avatar {
+            width: 52px;
+            height: 52px;
+            background: #0D0D0D;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .nav-avatar svg { width: 44px; height: 44px; }
+
+        /* ── PAGE CONTENT ── */
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 25px 64px;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
             margin-bottom: 24px;
-            display: none;
         }
+
+        /* ── FILTER BAR ── */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .filter-bar label {
+            font-size: 14px;
+            color: #aaa;
+            letter-spacing: 0.04em;
+        }
+        .filter-bar select {
+            background: #222223;
+            color: #FFFFFF;
+            border: 1.5px solid #65F2CE;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            outline: none;
+        }
+        .filter-bar select:focus {
+            box-shadow: 0 0 0 2px rgba(101,242,206,0.2);
+        }
+        .btn-cetak {
+            margin-left: auto;
+            background: transparent;
+            color: #65F2CE;
+            border: 1.5px solid #65F2CE;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.04em;
+            transition: background 0.2s;
+        }
+        .btn-cetak:hover { background: rgba(101,242,206,0.1); }
+
+        /* ── PERIODE INFO ── */
+        .periode-info {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #FFFFFF;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        .periode-info span { color: #65F2CE; }
+
+        /* ── SECTION ── */
+        .section { margin-bottom: 36px; }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            margin-bottom: 14px;
+            color: #FFFFFF;
+            border-left: 4px solid #65F2CE;
+            padding-left: 12px;
+        }
+
+        .section-body {
+            background: #1A1722;
+            border: 1px solid #2e2b38;
+            border-radius: 12px;
+            padding: 20px 24px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            line-height: 2;
+        }
+
+        .section-body .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2e2b38;
+            padding: 6px 0;
+        }
+        .section-body .row:last-child { border-bottom: none; }
+        .section-body .row .key { color: #aaa; font-weight: 400; }
+        .section-body .row .val { color: #65F2CE; font-weight: 700; }
+
+        /* ── STOK TABLE ── */
+        .stok-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .stok-table th {
+            text-align: left;
+            color: #65F2CE;
+            padding: 8px 12px;
+            border-bottom: 2px solid #2e2b38;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .stok-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #2e2b38;
+            color: #FFFFFF;
+        }
+        .stok-table tr:last-child td { border-bottom: none; }
+        .stok-table .num { text-align: right; color: #65F2CE; }
+
+        /* ── STATES ── */
+        .loading, .empty, .error {
+            text-align: center;
+            padding: 48px 20px;
+            font-size: 16px;
+            color: #888;
+            letter-spacing: 0.04em;
+        }
+        .error { color: #f87171; }
     </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <header>
-    <h1>📊 Laporan Penjualan</h1>
-    <span id="nama-toko" style="font-size:0.9rem; opacity:0.85;"></span>
+    <div class="nav-logo">LOGIN YUK</div>
+    <div class="nav-right">
+        <div class="nav-icon-chat" title="Chat">
+            <div class="bubble"></div>
+            <div class="tail"></div>
+        </div>
+        <div class="nav-icon-doc" title="Laporan">
+            <div class="lines">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="nav-avatar" title="Profil">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="22" cy="22" r="22" fill="#0D0D0D"/>
+                <circle cx="22" cy="17" r="8" fill="#65F2CE"/>
+                <ellipse cx="22" cy="36" rx="14" ry="8" fill="#65F2CE"/>
+            </svg>
+        </div>
+    </div>
 </header>
 
-<div class="container">
-    <div id="error-msg"></div>
+<!-- PAGE -->
+<div class="page">
+    <div class="page-title">Laporan Bulanan</div>
 
-    <!-- Kartu statistik -->
-    <div class="stat-grid" id="stat-grid">
-        <div class="loading">Memuat data laporan...</div>
+    <div class="filter-bar">
+        <label>Bulan:</label>
+        <select id="sel-bulan">
+            <option value="1">Januari</option>
+            <option value="2">Februari</option>
+            <option value="3">Maret</option>
+            <option value="4">April</option>
+            <option value="5">Mei</option>
+            <option value="6">Juni</option>
+            <option value="7">Juli</option>
+            <option value="8">Agustus</option>
+            <option value="9">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Desember</option>
+        </select>
+        <label>Tahun:</label>
+        <select id="sel-tahun"></select>
+        <button class="btn-cetak" onclick="window.print()">🖨 Cetak</button>
     </div>
 
-    <!-- Rangkuman per bulan -->
-    <h2>📅 Rangkuman Invoice per Bulan</h2>
-    <div class="bulan-list" id="bulan-list"></div>
+    <div id="content"><div class="loading">Memuat data laporan...</div></div>
 </div>
 
 <script>
-    // =============================================
-    // CONFIG: Ambil userId dari localStorage / session
-    // Sesuaikan dengan cara autentikasi project kamu
-    // =============================================
-    const userId = localStorage.getItem('userId') || 2; // fallback ke seller demo
+    const userId = localStorage.getItem('userId') || 2;
 
-    const BASE_URL = '/api/report/dashboard?userId=' + userId;
+    const selBulan = document.getElementById('sel-bulan');
+    const selTahun = document.getElementById('sel-tahun');
 
-    function formatRupiah(angka) {
-        return 'Rp ' + Number(angka).toLocaleString('id-ID');
+    // Isi opsi tahun
+    const tahunSekarang = new Date().getFullYear();
+    for (let y = tahunSekarang; y >= tahunSekarang - 3; y--) {
+        const o = document.createElement('option');
+        o.value = y; o.textContent = y;
+        selTahun.appendChild(o);
     }
 
-    function formatTanggal(iso) {
-        const d = new Date(iso);
-        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+    // Default bulan & tahun sekarang
+    selBulan.value = new Date().getMonth() + 1;
+    selTahun.value = tahunSekarang;
+
+    selBulan.addEventListener('change', loadReport);
+    selTahun.addEventListener('change', loadReport);
+
+    const BULAN_NAMA = ['','Januari','Februari','Maret','April','Mei','Juni',
+                        'Juli','Agustus','September','Oktober','November','Desember'];
+
+    function formatRupiah(n) {
+        return 'Rp ' + Number(n).toLocaleString('id-ID');
+    }
+    function tanggalCetak() {
+        return new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     async function loadReport() {
+        const bulan = selBulan.value;
+        const tahun = selTahun.value;
+        const url = `/api/report/laporan?userId=${userId}&bulan=${bulan}&tahun=${tahun}`;
+        document.getElementById('content').innerHTML = '<div class="loading">Memuat data laporan...</div>';
         try {
-            const res = await fetch(BASE_URL);
-            if (!res.ok) {
-                const msg = await res.text();
-                throw new Error(msg);
-            }
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(await res.text());
             const data = await res.json();
-            renderDashboard(data);
+            render(data, bulan);
         } catch (err) {
-            document.getElementById('error-msg').style.display = 'block';
-            document.getElementById('error-msg').textContent = 'Gagal memuat laporan: ' + err.message;
-            document.getElementById('stat-grid').innerHTML = '';
+            document.getElementById('content').innerHTML =
+                `<div class="error">⚠ Gagal memuat laporan: ${err.message}</div>`;
         }
     }
 
-    function renderDashboard(data) {
-        // Nama toko
-        document.getElementById('nama-toko').textContent = data.namaToko;
+    function render(d, bulan) {
+        const rk  = d.ringkasanKeuangan    || {};
+        const dp  = d.detailPemesanan      || {};
+        const pt  = d.produkTerjual        || {};
+        const ptk = d.produkTidakTerjual   || {};
+        const stok = d.stokBarang          || {};
 
-        // Stat cards
-        document.getElementById('stat-grid').innerHTML = `
-            <div class="stat-card">
-                <div class="label">Total Penjualan</div>
-                <div class="value">${data.totalPenjualanKeseluruhan}</div>
-                <div class="sub">transaksi berhasil</div>
+        function gameRows(obj) {
+            return Object.entries(obj).map(([nama, jml]) =>
+                `<div class="row">
+                    <span class="key">${nama}</span>
+                    <span class="val">${jml}</span>
+                </div>`
+            ).join('');
+        }
+
+        function stokRows(obj) {
+            return Object.entries(obj).map(([nama, arr]) =>
+                `<tr>
+                    <td>${nama}</td>
+                    <td class="num">${arr[0]}</td>
+                    <td class="num">${arr[1]}</td>
+                </tr>`
+            ).join('');
+        }
+
+        document.getElementById('content').innerHTML = `
+            <div class="periode-info">
+                Periode : Bulan : <span>${BULAN_NAMA[parseInt(bulan)]}</span><br>
+                Tanggal Cetak : <span>${tanggalCetak()}</span>
             </div>
-            <div class="stat-card">
-                <div class="label">Total Pendapatan</div>
-                <div class="value" style="font-size:1.25rem">${formatRupiah(data.totalPendapatanKeseluruhan)}</div>
-                <div class="sub">dari semua transaksi</div>
+
+            <div class="section">
+                <div class="section-title">Ringkasan Keuangan</div>
+                <div class="section-body">
+                    <div class="row"><span class="key">Total Pendapatan</span><span class="val">${formatRupiah(rk.totalPendapatan ?? 0)}</span></div>
+                    <div class="row"><span class="key">Total Produk Terjual</span><span class="val">${rk.totalProdukTerjual ?? 0} item</span></div>
+                    <div class="row"><span class="key">Rata-rata Transaksi</span><span class="val">${formatRupiah(rk.rataTransaksi ?? 0)}</span></div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="label">Rata-rata per Transaksi</div>
-                <div class="value" style="font-size:1.25rem">${formatRupiah(data.rataRataPerTransaksi)}</div>
-                <div class="sub">nilai rata-rata</div>
+
+            <div class="section">
+                <div class="section-title">Detail Pemesanan</div>
+                <div class="section-body">
+                    <div class="row"><span class="key">Berhasil</span><span class="val">${dp.berhasil ?? 0}</span></div>
+                    <div class="row"><span class="key">Batal</span><span class="val">${dp.batal ?? 0}</span></div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="label">Periode Aktif</div>
-                <div class="value">${data.rangkumanPerBulan.length}</div>
-                <div class="sub">bulan dengan penjualan</div>
+
+            <div class="section">
+                <div class="section-title">Detail Produk Terjual</div>
+                <div class="section-body">${gameRows(pt)}</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Detail Produk Tidak Terjual</div>
+                <div class="section-body">${gameRows(ptk)}</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Stok Barang</div>
+                <div class="section-body" style="padding:0;">
+                    <table class="stok-table">
+                        <thead>
+                            <tr>
+                                <th>Nama Game</th>
+                                <th style="text-align:right">Stok Awal</th>
+                                <th style="text-align:right">Stok Akhir</th>
+                            </tr>
+                        </thead>
+                        <tbody>${stokRows(stok)}</tbody>
+                    </table>
+                </div>
             </div>
         `;
-
-        // Rangkuman per bulan
-        const list = document.getElementById('bulan-list');
-        if (!data.rangkumanPerBulan.length) {
-            list.innerHTML = '<div class="empty">Belum ada data penjualan.</div>';
-            return;
-        }
-
-        list.innerHTML = data.rangkumanPerBulan.map((b, i) => `
-            <div class="bulan-card">
-                <div class="bulan-header" onclick="toggleBulan(${i})">
-                    <span class="bulan-label">📆 ${b.label}</span>
-                    <span class="bulan-stats">
-                        ${b.totalPenjualan} penjualan &nbsp;|&nbsp; ${formatRupiah(b.totalPendapatan)}
-                    </span>
-                    <span class="toggle" id="toggle-${i}">▼</span>
-                </div>
-                <table class="invoice-table" id="table-${i}">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Produk</th>
-                            <th>Harga</th>
-                            <th>Metode</th>
-                            <th>Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${b.invoices.map((inv, j) => `
-                            <tr>
-                                <td>${j + 1}</td>
-                                <td>${inv.namaGame}</td>
-                                <td>${formatRupiah(inv.harga)}</td>
-                                <td><span class="badge">${inv.metodePembayaran}</span></td>
-                                <td>${formatTanggal(inv.waktu)}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `).join('');
     }
 
-    function toggleBulan(i) {
-        const table = document.getElementById('table-' + i);
-        const toggle = document.getElementById('toggle-' + i);
-        const isOpen = table.classList.contains('open');
-        table.classList.toggle('open', !isOpen);
-        toggle.textContent = isOpen ? '▼' : '▲';
-    }
-
-    // Cek akses: hanya seller
+    // Guard: hanya seller
     const userRole = localStorage.getItem('userRole');
     if (userRole && userRole !== 'SELLER') {
-        document.querySelector('.container').innerHTML =
-            '<div class="empty" style="color:#c00">⛔ Halaman ini hanya untuk penjual.</div>';
+        document.getElementById('content').innerHTML =
+            '<div class="error">⛔ Halaman ini hanya untuk penjual.</div>';
     } else {
         loadReport();
     }
 </script>
-
 </body>
 </html>
