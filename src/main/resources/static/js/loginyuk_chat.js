@@ -2,12 +2,11 @@ const chatMessages = document.getElementById('chatMessages');
 const messageInput = document.getElementById('messageInput');
 const sendBtn = document.getElementById('sendBtn');
 
-const roomId = "1";
-
+const roomId = "1"; // hardcode dulu
 const token = localStorage.getItem('jwt');
 
 let stompClient = null;
-let subscription = null; 
+let subscription = null;
 
 function renderBubble(isi, isMine) {
     const row = document.createElement('div');
@@ -26,8 +25,22 @@ function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-function connect() {
+function loadMessages(roomId) {
+    fetch(`/api/chat/history/${roomId}`, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(res => res.json())
+    .then(messages => {
+        chatMessages.innerHTML = ''; // clear dulu
+        messages.forEach(msg => {
+            const isMine = String(msg.senderId) === String(getUserId());
+            renderBubble(msg.isi, isMine);
+        });
+    })
+    .catch(err => console.error('Gagal load messages:', err));
+}
 
+function connect() {
     if (stompClient && stompClient.connected) {
         console.log("Sudah terkoneksi, skip connect()");
         return;
@@ -39,20 +52,20 @@ function connect() {
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
-        // Unsubscribe dulu kalau sudah ada (cegah double)
         if (subscription) {
             subscription.unsubscribe();
             subscription = null;
         }
 
-        // Simpan reference subscription ← ini yang kurang sebelumnya
         subscription = stompClient.subscribe(`/topic/rooms/${roomId}`, function(message) {
             console.log("RAW", message.body);
             const msg = JSON.parse(message.body);
-            const isMine = msg.sender === getCurrentUsername();
+            const isMine = String(msg.senderId) === String(getUserId());
             renderBubble(msg.content, isMine);
         });
 
+        loadMessages(roomId); // ← pakai roomId bukan currentRoomId
+    
     }, function (error) {
         console.error('STOMP error:', error);
     });
@@ -82,12 +95,9 @@ function sendMessage() {
     const isi = messageInput.value.trim();
     if (isi === '' || !stompClient) return;
 
-    const username = getCurrentUsername();
-    const userId = getUserId();
-
     const chatMessage = {
-        sender: username,
-        senderId: userId,
+        sender: getCurrentUsername(),
+        senderId: getUserId(),
         content: isi,
         roomId: roomId,
         type: 'CHAT'
@@ -117,7 +127,5 @@ messageInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') sendMessage();
 });
 
-
-
 connect();
-loadUserProfile()
+loadUserProfile();

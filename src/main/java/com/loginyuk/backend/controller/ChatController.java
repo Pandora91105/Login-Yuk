@@ -2,15 +2,23 @@ package com.loginyuk.backend.controller;
 
 import com.loginyuk.backend.model.ChatMessage;
 import com.loginyuk.backend.model.ChatMessageEntity;
+import com.loginyuk.backend.model.User;
+import com.loginyuk.backend.repository.UserRepository;
 import com.loginyuk.backend.service.ChatService;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,5 +92,20 @@ public class ChatController {
                             @Payload ChatMessage message, Principal sender) {
         message.setSender(sender.getName());
         messagingTemplate.convertAndSendToUser(targetUser, "/queue/messages", message);
+    }
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/api/user/me")
+    public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = UserRepository.findByUsername(userDetails.getUsername());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", user.getUsername());
+        map.put("profilePhoto", user.getProfilePhoto());
+        map.put("role", user.getRole());
+
+        return ResponseEntity.ok(map);
     }
 }

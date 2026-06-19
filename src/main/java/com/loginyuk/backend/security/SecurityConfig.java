@@ -49,6 +49,9 @@ public class SecurityConfig {
                     .requestMatchers("/api/test-token/**").permitAll()
                     .requestMatchers("/api/transaksi/**").permitAll()
                     .requestMatchers("/api/report/**").permitAll()
+                    .requestMatchers("/api/rooms/**").authenticated()   // ← pastikan ada
+                    .requestMatchers("/api/user/me").authenticated() 
+                    .requestMatchers("/api/chat/history/**").authenticated()
                     .requestMatchers("/api/chat/**").permitAll()
                     .requestMatchers("/", "/*.html", "/css/**", "/js/**",
                                     "/static/css/**", "/static/js/**",
