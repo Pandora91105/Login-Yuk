@@ -18,53 +18,85 @@ body {
 }
 
 .navbar {
-    background-color: var(--primary);
-    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 16px;
+    padding: 0 28px;
+    height: 58px;
+    background: var(--primary);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
 }
-
-.navbar .logo {
-    font-family: 'Krona One', sans-serif;
-    font-size: 24px;
+ 
+.brand {
+    font-family: 'Krona one', sans-serif;
     font-weight: 700;
-    background: var(--text-main);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--text-main);
+    white-space: nowrap;
+    text-decoration: none;
+    flex-shrink: 0;
 }
-
-.navbar-search{
-    background-color: #4E4E50;
-    border: none;
-    padding: 10px 15px;
+.brand span { color: var(--text-main); }
+ 
+.search-wrap {
+    flex: 1;
+    max-width: 560px;
+    position: relative;
+}
+.search-wrap input {
+    width: 100%;
+    padding: 8px 40px 8px 14px;
+    background: #4E4E50;
+    border: 1px solid #5f6c69;
     border-radius: 100px;
-    color: var(--accent);
-    width: 500px;
-}
-
-input {
-    background-color: transparent;
-    border: none;
+    color: var(--text-1);
+    font-family: 'League Spartan', sans-serif;
+    font-size: 13px;
     outline: none;
-    color: white;
+    transition: border-color .2s;
 }
-
-
-.fa-solid.fa-comment {
+.search-wrap input:focus { border-color: var(--accent); }
+.search-wrap input::placeholder { color: var(--text-3); }
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     color: var(--accent);
-    font-size: 25px;
+    pointer-events: none;
 }
-
-.fa-solid.fa-clipboard-list {
+ 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+.nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
     color: var(--accent);
-    font-size: 25px;
-    margin-left: 8px;
-    margin-right:8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, box-shadow .2s;
 }
-
-.fa-solid.fa-circle-user {
-    color: var(--accent);
-    font-size: 25px;
+.nav-btn:hover {
+    background: var(--accent-dim);
+    box-shadow: 0 0 0 1px var(--accent-glow);
 }
+.nav-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.nav-btn img { width: 20px; height: 20px; fill: currentColor; }
+ 
 
 .chat-container {
     display: grid;
