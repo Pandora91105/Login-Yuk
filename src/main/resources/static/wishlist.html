@@ -17,145 +17,115 @@
 }
 
 body{
-    background:#1f1f1f;
-    color:white;
-    height:100vh;
-    overflow:hidden;
+    background:#060611;
+    color:#fff;
 }
 
-/* HEADER */
+/* ================= NAVBAR ================= */
 
-.header{
+.navbar{
     height:90px;
-    background:#242424;
+    background:#202126;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 30px;
+    padding:0 25px;
 }
 
 .logo{
-    font-size:24px;
+    font-size:22px;
     font-weight:600;
     letter-spacing:2px;
 }
 
-.header-icons{
+.nav-icons{
     display:flex;
     gap:25px;
-    font-size:32px;
-    color:#84d9c4;
+    font-size:28px;
+    color:#62e3cc;
 }
 
-/* TITLE */
+/* ================= HEADER ================= */
 
-.title-section{
-    background:#04040f;
-    padding:40px;
+.header{
+    background:#050512;
+    padding:40px 55px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
-.title-section h1{
-    font-size:55px;
-    color:#63d4bd;
+.header h1{
+    color:#18d4b3;
+    font-size:54px;
+    font-weight:700;
 }
 
 .search-box{
     position:relative;
+    width:650px;
 }
 
-.search{
-    width:650px;
-    padding:18px 60px 18px 25px;
+.search-box input{
+    width:100%;
+    height:50px;
     border:none;
     outline:none;
-    border-radius:40px;
-    background:#3b3b43;
+    border-radius:30px;
+    background:#44444d;
     color:white;
-    font-size:18px;
+    padding:0 20px;
 }
 
-.search-icon{
+.search-box span{
     position:absolute;
     right:20px;
     top:50%;
     transform:translateY(-50%);
-    font-size:28px;
-    color:#84d9c4;
+    color:#62e3cc;
 }
 
-/* CONTENT */
-
-.content{
-    height:calc(100vh - 250px);
-    padding:20px;
-    overflow:hidden;
-}
-
-/* TABLE HEADER */
+/* ================= TABLE HEADER ================= */
 
 .table-header{
     display:grid;
-    grid-template-columns:4fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
-    padding:20px;
+    grid-template-columns:4fr 1.3fr 1.3fr 1fr 1.3fr 1.3fr;
+    padding:40px 60px 20px;
     font-size:20px;
     font-weight:600;
-    text-align:center;
-    background:#050510;
 }
 
-/* PRODUCT LIST */
+/* ================= ITEM ================= */
 
-.product-list{
-    height:100%;
-    overflow-y:auto;
-    padding-bottom:120px;
-}
-
-.product-list::-webkit-scrollbar{
-    width:8px;
-}
-
-.product-list::-webkit-scrollbar-thumb{
-    background:#63d4bd;
-    border-radius:20px;
-}
-
-.store-box{
-    background:#2a2a2a;
-    margin-bottom:20px;
-}
-
-.store-name{
+.item{
+    background:#242529;
+    margin:0 25px 20px;
     padding:15px;
-    border-bottom:2px solid #151515;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    font-size:20px;
+}
+
+.store{
+    font-size:18px;
     font-weight:600;
+    margin-bottom:15px;
 }
-
-.checkbox{
-    width:28px;
-    height:28px;
-}
-
-/* PRODUCT ROW */
 
 .product-row{
     display:grid;
-    grid-template-columns:4fr 1.5fr 1.5fr 1fr 1.5fr 1.5fr;
+    grid-template-columns:4fr 1.3fr 1.3fr 1fr 1.3fr 1.3fr;
     align-items:center;
-    padding:25px;
 }
 
 .product-info{
     display:flex;
     align-items:center;
-    gap:20px;
+    gap:15px;
+}
+
+.checkbox{
+    width:26px;
+    height:26px;
+    border:3px solid #666;
+    cursor:pointer;
 }
 
 .product-info img{
@@ -169,246 +139,251 @@ body{
 }
 
 .status{
-    background:#78e36e;
-    width:150px;
-    text-align:center;
-    padding:10px;
+    display:inline-block;
+    background:#59df77;
+    padding:8px 18px;
     border-radius:30px;
-    margin:auto;
-    font-size:18px;
     font-weight:600;
 }
 
 .price,
 .qty,
 .total{
-    text-align:center;
     font-size:18px;
     font-weight:600;
 }
 
 .delete-btn{
-    background:#5b4949;
-    color:#ff7c7c;
     border:none;
-    padding:12px 28px;
+    background:#544245;
+    color:#ff6c6c;
+    padding:10px 25px;
     border-radius:25px;
     font-size:18px;
+    font-weight:600;
     cursor:pointer;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
-.footer-checkout{
+.footer-bar{
     position:fixed;
     bottom:0;
     left:0;
-    width:100%;
-    height:100px;
-    background:rgba(38,38,38,.95);
-    backdrop-filter:blur(10px);
-    border-top:1px solid rgba(255,255,255,.1);
-
+    right:0;
+    background:#242529;
+    height:95px;
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:0 35px;
+    box-shadow:0 -4px 15px rgba(255,255,255,0.15);
 }
 
-.footer-left{
+.select-all{
     display:flex;
     align-items:center;
     gap:15px;
-    font-size:18px;
+    font-size:20px;
     font-weight:600;
 }
 
-.footer-center{
-    font-size:18px;
-    font-weight:600;
+.total-text{
+    font-size:22px;
+    font-weight:700;
 }
 
 .checkout-btn{
     border:none;
-    background:#84d9c4;
+    background:#61d4bf;
     color:white;
+    font-size:20px;
+    font-weight:700;
     padding:15px 45px;
-    font-size:18px;
-    border-radius:10px;
+    border-radius:8px;
     cursor:pointer;
-    font-weight:600;
 }
 
 </style>
 </head>
+
 <body>
 
-<header class="header">
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">LOGIN YUK</div>
 
-    <div class="logo">
-        LOGIN YUK
+    <div class="nav-icons">
+        💬 📋 👤
     </div>
+</div>
 
-    <div class="header-icons">
-        💬 📑 👤
-    </div>
-
-</header>
-
-<section class="title-section">
-
+<!-- HEADER -->
+<div class="header">
     <h1>My Wishlist</h1>
 
     <div class="search-box">
-        <input type="text" class="search">
-        <span class="search-icon">🔍</span>
+        <input type="text">
+        <span>🔍</span>
+    </div>
+</div>
+
+<!-- TABLE HEADER -->
+<div class="table-header">
+    <div>Product</div>
+    <div>Status</div>
+    <div>Price</div>
+    <div>Qty</div>
+    <div>Total</div>
+    <div>Action</div>
+</div>
+
+<!-- ITEM 1 -->
+<div class="item">
+
+    <div class="store">
+        ☐ Store name
     </div>
 
-</section>
+    <div class="product-row">
 
-<div class="content">
+        <div class="product-info">
+            <div class="checkbox"></div>
 
-    <div class="table-header">
-        <div>Product</div>
-        <div>Status</div>
-        <div>Price</div>
-        <div>Qty</div>
-        <div>Total</div>
-        <div>Action</div>
-    </div>
+            <img src="assets/image_coc2.png" alt="CoC lvl 50">
 
-    <div class="product-list">
-
-        <!-- PRODUCT 1 -->
-
-        <div class="store-box">
-
-            <div class="store-name">
-                <input type="checkbox" class="checkbox">
-                Store name
+            <div class="product-title">
+                CoC lvl 50
             </div>
-
-            <div class="product-row">
-
-                <div class="product-info">
-                    <input type="checkbox" class="checkbox">
-
-                    <img src="https://picsum.photos/200?random=1">
-
-                    <div class="product-title">
-                        CoC Lvl 50
-                    </div>
-                </div>
-
-                <div>
-                    <div class="status">
-                        Available
-                    </div>
-                </div>
-
-                <div class="price">
-                    Rp 65.000
-                </div>
-
-                <div class="qty">
-                    1
-                </div>
-
-                <div class="total">
-                    Rp 65.000
-                </div>
-
-                <div style="text-align:center;">
-                    <button class="delete-btn">
-                        Hapus
-                    </button>
-                </div>
-
-            </div>
-
         </div>
 
-        <!-- LOOP DEMO -->
+        <div>
+            <span class="status">Available</span>
+        </div>
 
-        <script>
+        <div class="price">
+            Rp 65.000
+        </div>
 
-            for(let i=2;i<=20;i++){
+        <div class="qty">
+            1
+        </div>
 
-                document.write(`
-                    <div class="store-box">
+        <div class="total">
+            Rp 65.000
+        </div>
 
-                        <div class="store-name">
-                            <input type="checkbox" class="checkbox">
-                            Store ${i}
-                        </div>
-
-                        <div class="product-row">
-
-                            <div class="product-info">
-
-                                <input type="checkbox" class="checkbox">
-
-                                <img src="https://picsum.photos/200?random=${i}">
-
-                                <div class="product-title">
-                                    Product ${i}
-                                </div>
-
-                            </div>
-
-                            <div>
-                                <div class="status">
-                                    Available
-                                </div>
-                            </div>
-
-                            <div class="price">
-                                Rp 100.000
-                            </div>
-
-                            <div class="qty">
-                                1
-                            </div>
-
-                            <div class="total">
-                                Rp 100.000
-                            </div>
-
-                            <div style="text-align:center;">
-                                <button class="delete-btn">
-                                    Hapus
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                `);
-
-            }
-
-        </script>
+        <div>
+            <button class="delete-btn">Hapus</button>
+        </div>
 
     </div>
 
 </div>
 
-<footer class="footer-checkout">
+<!-- ITEM 2 -->
+<div class="item">
 
-    <div class="footer-left">
-        <input type="checkbox" class="checkbox">
+    <div class="store">
+        ☐ Store name
+    </div>
+
+    <div class="product-row">
+
+        <div class="product-info">
+            <div class="checkbox"></div>
+
+            <img src="assets/image_ml3.png" alt="ML Rank Mythic">
+
+            <div class="product-title">
+                ML RANK MYTHIC
+            </div>
+        </div>
+
+        <div>
+            <span class="status">Available</span>
+        </div>
+
+        <div class="price">
+            Rp 2.745.000
+        </div>
+
+        <div class="qty">
+            1
+        </div>
+
+        <div class="total">
+            Rp 2.745.000
+        </div>
+
+        <div>
+            <button class="delete-btn">Hapus</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ITEM 3 -->
+<div class="item">
+
+    <div class="store">
+        ☐ Store name
+    </div>
+
+    <div class="product-row">
+
+        <div class="product-info">
+            <div class="checkbox"></div>
+
+            <img src="assets/image_ml4.png" alt="ML Lapu-Lapu">
+
+            <div class="product-title">
+                ML Lapu-Lapu
+            </div>
+        </div>
+
+        <div>
+            <span class="status">Available</span>
+        </div>
+
+        <div class="price">
+            Rp 750.000
+        </div>
+
+        <div class="qty">
+            1
+        </div>
+
+        <div class="total">
+            Rp 750.000
+        </div>
+
+        <div>
+            <button class="delete-btn">Hapus</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+
+    <div class="select-all">
+        <div class="checkbox"></div>
         Select All
     </div>
 
-    <div class="footer-center">
-        Total (20 Product) : Rp 0
+    <div class="total-text">
+        Total (0 Product) : Rp 0
     </div>
 
     <button class="checkout-btn">
         Check Out
     </button>
 
-</footer>
+</div>
 
 </body>
 </html>
