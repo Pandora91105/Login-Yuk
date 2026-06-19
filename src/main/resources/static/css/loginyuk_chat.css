@@ -18,7 +18,7 @@ body {
 }
 
 .navbar {
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 100;
     display: flex;
@@ -64,7 +64,7 @@ body {
 .search-wrap input::placeholder { color: var(--text-3); }
 .search-icon {
     position: absolute;
-    right: 12px;
+    right: -20px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--accent);
@@ -259,6 +259,9 @@ body {
     border-radius: 75px;
     border: none;
     outline: none;
+    background-color: var(--primary);
+    color: var(--text-main);
+
 }
 
 .chat-input-area button {
