@@ -124,9 +124,9 @@ html { scroll-behavior: smooth; }
       margin-bottom: 24px;
     }
     .section-title {
-      font-family: 'Krona One', sans-serif;
+      font-family: 'League Spartan', sans-serif;
       font-weight: 700;
-      font-size: 22px;
+      font-size: 26px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-main);
