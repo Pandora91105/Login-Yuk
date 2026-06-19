@@ -82,27 +82,48 @@
   </div>
 
   <script>
-    // Countdown timer 3 menit
-    let totalDetik = 3 * 60 * 60; // 3 jam sesuai mockup
+// Countdown 30 menit dihitung dari waktuTransaksi
+    const DURASI_DETIK = 30 * 60; // 30 menit
 
     const timerEl = document.getElementById('timer');
     const expiredEl = document.getElementById('expiredMsg');
     const btnBayar = document.getElementById('btnBayar');
 
-    const interval = setInterval(() => {
+    function hitungSisaDetik() {
+      const raw = localStorage.getItem('transaksiData');
+      if (!raw) return DURASI_DETIK;
+      const data = JSON.parse(raw);
+      if (!data.waktuTransaksi) return DURASI_DETIK;
+
+      const waktuMulai = new Date(data.waktuTransaksi).getTime();
+      const sekarang = new Date().getTime();
+      const detikBerlalu = Math.floor((sekarang - waktuMulai) / 1000);
+      return DURASI_DETIK - detikBerlalu;
+    }
+
+    function updateTimerDisplay(totalDetik) {
       if (totalDetik <= 0) {
-        clearInterval(interval);
         timerEl.textContent = '0 : 00 : 00';
         expiredEl.innerHTML = '<p class="expired">Waktu pembayaran habis. Transaksi dibatalkan.</p>';
         btnBayar.disabled = true;
         btnBayar.style.opacity = '0.4';
         return;
       }
-      totalDetik--;
       const jam = Math.floor(totalDetik / 3600);
       const menit = Math.floor((totalDetik % 3600) / 60);
       const detik = totalDetik % 60;
       timerEl.textContent = `${jam} : ${String(menit).padStart(2,'0')} : ${String(detik).padStart(2,'0')}`;
+    }
+
+    let sisaDetik = hitungSisaDetik();
+    updateTimerDisplay(sisaDetik);
+
+    const interval = setInterval(() => {
+      sisaDetik--;
+      updateTimerDisplay(sisaDetik);
+      if (sisaDetik <= 0) {
+        clearInterval(interval);
+      }
     }, 1000);
 
     async function konfirmasiBayar() {

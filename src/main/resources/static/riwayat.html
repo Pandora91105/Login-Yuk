@@ -68,7 +68,9 @@
         // Urutkan terbaru dulu
         data.sort((a, b) => new Date(b.waktuTransaksi) - new Date(a.waktuTransaksi));
 
-        container.innerHTML = data.map(trx => `
+    container.innerHTML = data.map(trx => {
+          const labelStatus = trx.status === 'PENDING' ? 'In Progress' : trx.status;
+          return `
           <div class="riwayat-item" onclick="lihatDetail(${JSON.stringify(trx).replace(/"/g, '&quot;')})">
             <div class="riwayat-info">
               <h3>${trx.game?.namaGame || 'Game tidak diketahui'}</h3>
@@ -76,10 +78,11 @@
             </div>
             <div class="riwayat-right">
               <div class="riwayat-harga">${formatRupiah(trx.harga || trx.game?.harga || 0)}</div>
-              <span class="status-badge status-${trx.status}">${trx.status}</span>
+              <span class="status-badge status-${trx.status}">${labelStatus}</span>
             </div>
           </div>
-        `).join('');
+        `;
+        }).join('');
       } catch (e) {
         document.getElementById('riwayatList').innerHTML = '<div class="error">Gagal memuat riwayat. Pastikan backend berjalan.</div>';
       }
@@ -87,7 +90,12 @@
 
     function lihatDetail(trx) {
       localStorage.setItem('transaksiData', JSON.stringify(trx));
-      window.location.href = 'payment-success.html';
+      localStorage.setItem('transaksiId', trx.id);
+      if (trx.status === 'PENDING') {
+        window.location.href = 'qris.html';
+      } else {
+        window.location.href = 'payment-success.html';
+      }
     }
 
     loadRiwayat();
