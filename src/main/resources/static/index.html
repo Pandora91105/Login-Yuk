@@ -5,12 +5,200 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="refresh" content="0; url=pages/loginyuk_chat.html">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LoginYuk - Marketplace Akun Game</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+        <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
     </head>
     <body>
+
+    <header class="navbar">
+        <a class="brand" href="#">LOGIN<span>YUK</span></a>
+        
+        <div class="search-wrap">
+            <input type="text" placeholder="Cari akun game favoritmu..." />
+            <span class="search-icon">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+            </svg>
+            </span>
+        </div>
+        
+        <nav class="nav-actions">
+            <!-- Chat -->
+            <a class="nav-btn" title="Pesan" href="loginYuk_chat.html">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-2 2V4h16v10z"/>
+            </svg>
+            </a>
+            <!-- Orders -->
+            <button class="nav-btn" title="Pesanan">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+            </svg>
+            </button>
+            <!-- Profile -->
+            <button class="nav-btn" title="Profil">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+            </button>
+        </nav>
+        </header>
+        
+        <!-- HERO BANNER -->
+        <section class="hero">
+        <!-- Placeholder gradient hero – replace src with your banner image -->
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+            <img src="assets/image_hero.png" alt="avatar" class="hero-img" />
+        </div>
+        </section>
+        
+        <!-- MAIN -->
+        <main class="main">
+        
+        <!-- Section: Rekomendasi -->
+        <div class="section-header">
+            <h2 class="section-title">Rekomendasi</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <!-- Row 1 -->
+        <div class="card-grid">
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_ml1.png" alt="Akun ML" />
+                
+            </div>
+            <div class="card-body">
+                <div class="card-title">Beli Akun ML</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">250.000</span>
+                </div>
+            </div>
+            </div>
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_pubg1.png" alt="Akun PUBG" />
+                
+            </div>
+            <div class="card-body">
+                <div class="card-title">Beli Akun PUBG Legend</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">2.500.000</span>
+                </div>
+            </div>
+            </div>
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_ml2.png" alt="Akun ML" />
+                
+            </div>
+            <div class="card-body">
+                <div class="card-title">Akun ML</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">765.000</span>
+                </div>
+            </div>
+            </div>
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_coc1.png" alt="CoC lvl 999" />
+                
+            </div>
+            <div class="card-body">
+                <div class="card-title">CoC lvl 999</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">1.250.000</span>
+                </div>
+            </div>
+            </div>
+        
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="card-grid">
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_pubg2.png" alt="PUBG lama" />
+               
+            </div>
+            <div class="card-body">
+                <div class="card-title">PUBG Lama Ga Dipake</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">50.000</span>
+                </div>
+            </div>
+            </div>
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_coc2.png" alt="CoC lvl 50" />
+               
+            </div>
+            <div class="card-body">
+                <div class="card-title">CoC lvl 50</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">65.000</span>
+                </div>
+            </div>
+            </div>
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_ml3.png" alt="ML Rank Mythic" />
+            </div>
+            <div class="card-body">
+                <div class="card-title">ML Rank Mythic</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">2.745.000</span>
+                </div>
+            </div>
+            </div>
+        
+            <div class="card">
+            <div class="card-img-wrap">
+                <img src="assets/image_ml4.png" alt="ML Lapu-Lapu" />
+                
+            </div>
+            <div class="card-body">
+                <div class="card-title">ML Lapu-Lapu</div>
+                <div class="card-price">
+                <span class="price-label">Rp</span>
+                <span class="price-value">750.000</span>
+                </div>
+            </div>
+            </div>
+        
+        </div>
+        
+        <!-- Load More -->
+        <div class="load-more-wrap">
+            <button class="btn-load-more">Lihat Lainnya</button>
+        </div>
+        
+        </main>
         
     </body>
 </html>
