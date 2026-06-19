@@ -97,9 +97,12 @@ public class ChatController {
     @Autowired
     private UserRepository userRepository;
 
+
     @GetMapping("/api/user/me")
+    @ResponseBody
     public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails) {
-        User user = UserRepository.findByUsername(userDetails.getUsername());
+        User user = userRepository.findByUsername(userDetails.getUsername())
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
         Map<String, Object> map = new HashMap<>();
         map.put("username", user.getUsername());

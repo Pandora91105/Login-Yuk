@@ -2,6 +2,9 @@ const chatMessages = document.getElementById('chatMessages');
 const messageInput = document.getElementById('messageInput');
 const sendBtn = document.getElementById('sendBtn');
 
+// Ganti port sesuai server.port backend Spring Boot kamu (cek application.properties)
+const API_BASE = "http://localhost:8080";
+
 const roomId = "1"; // hardcode dulu
 const token = localStorage.getItem('jwt');
 
@@ -26,7 +29,7 @@ function scrollToBottom() {
 }
 
 function loadMessages(roomId) {
-    fetch(`/api/chat/history/${roomId}`, {
+    fetch(`${API_BASE}/api/chat/history/${roomId}`, {
         headers: { 'Authorization': 'Bearer ' + token }
     })
     .then(res => res.json())
@@ -46,7 +49,7 @@ function connect() {
         return;
     }
 
-    const socket = new SockJS("/ws-chat");
+    const socket = new SockJS(`${API_BASE}/ws-chat`);
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function (frame) {
@@ -110,7 +113,7 @@ function sendMessage() {
 function loadUserProfile() {
     if (!token) return;
 
-    fetch('/api/user/me', {
+    fetch(`${API_BASE}/api/user/me`, {
         headers: { 'Authorization': 'Bearer ' + token }
     })
     .then(res => res.json())
