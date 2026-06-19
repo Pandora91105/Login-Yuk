@@ -275,43 +275,55 @@
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             const alertEl = document.getElementById('alertMsg');
- 
+
             alertEl.style.display = 'none';
- 
+
             if (!username || !password) {
                 showAlert('Username dan password wajib diisi.', 'error');
                 return;
             }
- 
+
             try {
                 const res = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
                 });
- 
-                const text = await res.text();
- 
-                if (res.ok) {
-                    showAlert("Login berhasil", "success");
 
-                    // Redirect setelah login berhasil, sesuaikan URL tujuan
-                    setTimeout(() => window.location.href = "/index.html", 1000);
+                if (res.ok) {
+                    const data = await res.json();
+
+                    // Simpan info user ke localStorage
+                    localStorage.setItem('userId',   data.userId);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('userRole', data.role);
+
+                    showAlert('Login berhasil! Mengalihkan...', 'success');
+
+                    // Redirect berdasarkan role
+                    setTimeout(() => {
+                        if (data.role === 'SELLER') {
+                            window.location.href = 'report.html';
+                        } else {
+                            window.location.href = 'dashboard.html';
+                        }
+                    }, 800);
                 } else {
+                    const text = await res.text();
                     showAlert(text, 'error');
                 }
             } catch (err) {
                 showAlert('Tidak dapat terhubung ke server.', 'error');
             }
         }
- 
+
         function showAlert(msg, type) {
             const el = document.getElementById('alertMsg');
             el.textContent = msg;
             el.className = 'alert ' + type;
             el.style.display = 'block';
         }
- 
+
         // Enter key support
         document.addEventListener('keydown', e => {
             if (e.key === 'Enter') handleLogin();

@@ -201,6 +201,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </div>
         
         </main>
+
+        <script>
+            const userId   = localStorage.getItem('userId');
+            const username = localStorage.getItem('username');
+            const userRole = localStorage.getItem('userRole');
+
+            if (!userId) {
+                window.location.href = 'login.html';
+            }
+
+            const profileBtn = document.querySelector('[title="Profil"]');
+            if (profileBtn && username) {
+                profileBtn.setAttribute('title', username);
+            }
+
+            const txBtn = document.querySelector('[title="Transaction"]');
+            if (txBtn) {
+                txBtn.onclick = () => window.location.href = 'riwayat.html';
+            }
+        </script>
         
     </body>
 </html>
