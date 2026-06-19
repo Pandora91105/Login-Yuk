@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>My Wishlist</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,19 +14,20 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#060611;
-    color:#fff;
+    background:#050512;
+    color:white;
+    font-family:'League Spartan',sans-serif;
+    overflow-x:hidden;
 }
 
 /* ================= NAVBAR ================= */
 
 .navbar{
     height:90px;
-    background:#202126;
+    background:#222226;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -33,37 +35,41 @@ body{
 }
 
 .logo{
-    font-size:22px;
-    font-weight:600;
-    letter-spacing:2px;
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
+    color:white;
 }
 
-.nav-icons{
+.nav-right{
     display:flex;
     gap:25px;
+    align-items:center;
+}
+
+.nav-icon{
     font-size:28px;
-    color:#62e3cc;
+    color:#63d8c2;
+    cursor:pointer;
 }
 
 /* ================= HEADER ================= */
 
 .header{
-    background:#050512;
-    padding:40px 55px;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:40px 55px;
 }
 
 .header h1{
-    color:#18d4b3;
-    font-size:54px;
-    font-weight:700;
+    font-family:'Krona One',sans-serif;
+    color:#1ED5B3;
+    font-size:48px;
 }
 
 .search-box{
-    position:relative;
     width:650px;
+    position:relative;
 }
 
 .search-box input{
@@ -72,46 +78,83 @@ body{
     border:none;
     outline:none;
     border-radius:30px;
-    background:#44444d;
+    background:#4a4a4f;
+    padding:0 55px 0 20px;
     color:white;
-    padding:0 20px;
+    font-size:18px;
 }
 
-.search-box span{
+.search-icon{
     position:absolute;
     right:20px;
     top:50%;
     transform:translateY(-50%);
-    color:#62e3cc;
+    color:#63d8c2;
+    font-size:22px;
+}
+
+/* ================= DIVIDER ================= */
+
+.divider{
+    height:70px;
+    background:#222226;
 }
 
 /* ================= TABLE HEADER ================= */
 
 .table-header{
     display:grid;
-    grid-template-columns:4fr 1.3fr 1.3fr 1fr 1.3fr 1.3fr;
+    grid-template-columns:
+    4fr
+    1.3fr
+    1.3fr
+    0.8fr
+    1.3fr
+    1fr;
+
     padding:40px 60px 20px;
-    font-size:20px;
-    font-weight:600;
+}
+
+.table-header div{
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
 }
 
 /* ================= ITEM ================= */
 
 .item{
     background:#242529;
-    margin:0 25px 20px;
+    margin:0 24px 20px;
     padding:15px;
 }
 
-.store{
-    font-size:18px;
-    font-weight:600;
+.store-name{
+    display:flex;
+    align-items:center;
+    gap:15px;
     margin-bottom:15px;
+
+    font-family:'Krona One',sans-serif;
+    font-size:16px;
+}
+
+.checkbox{
+    width:25px;
+    height:25px;
+    border:3px solid #666;
+    cursor:pointer;
 }
 
 .product-row{
     display:grid;
-    grid-template-columns:4fr 1.3fr 1.3fr 1fr 1.3fr 1.3fr;
+    grid-template-columns:
+    4fr
+    1.3fr
+    1.3fr
+    0.8fr
+    1.3fr
+    1fr;
+
     align-items:center;
 }
 
@@ -121,13 +164,6 @@ body{
     gap:15px;
 }
 
-.checkbox{
-    width:26px;
-    height:26px;
-    border:3px solid #666;
-    cursor:pointer;
-}
-
 .product-info img{
     width:130px;
     height:130px;
@@ -135,32 +171,38 @@ body{
 }
 
 .product-title{
-    font-size:20px;
+    font-size:24px;
+    font-weight:500;
 }
 
 .status{
+    background:#5CE176;
+    color:white;
+    padding:10px 20px;
+    border-radius:25px;
     display:inline-block;
-    background:#59df77;
-    padding:8px 18px;
-    border-radius:30px;
-    font-weight:600;
+
+    font-size:18px;
+    font-weight:700;
 }
 
 .price,
 .qty,
 .total{
-    font-size:18px;
-    font-weight:600;
+    font-family:'Krona One',sans-serif;
+    font-size:16px;
 }
 
 .delete-btn{
     border:none;
-    background:#544245;
-    color:#ff6c6c;
-    padding:10px 25px;
+    background:#5A4649;
+    color:#FF6D6D;
+    padding:12px 30px;
     border-radius:25px;
-    font-size:18px;
-    font-weight:600;
+
+    font-family:'Krona One',sans-serif;
+    font-size:15px;
+
     cursor:pointer;
 }
 
@@ -171,83 +213,141 @@ body{
     bottom:0;
     left:0;
     right:0;
-    background:#242529;
+
     height:95px;
+
+    background:#242529;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
+
     padding:0 35px;
-    box-shadow:0 -4px 15px rgba(255,255,255,0.15);
+
+    box-shadow:
+    0 -5px 20px rgba(255,255,255,0.15);
 }
 
 .select-all{
     display:flex;
     align-items:center;
     gap:15px;
-    font-size:20px;
-    font-weight:600;
+
+    font-family:'Krona One',sans-serif;
+    font-size:16px;
 }
 
-.total-text{
-    font-size:22px;
-    font-weight:700;
+.total-price{
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
 }
 
 .checkout-btn{
     border:none;
-    background:#61d4bf;
+    background:#63D8C2;
     color:white;
-    font-size:20px;
-    font-weight:700;
-    padding:15px 45px;
+
+    padding:18px 40px;
+
     border-radius:8px;
+
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
+
     cursor:pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+.header{
+    flex-direction:column;
+    gap:20px;
+}
+
+.search-box{
+    width:100%;
+}
+
+.table-header{
+    display:none;
+}
+
+.product-row{
+    grid-template-columns:1fr;
+    gap:15px;
+}
+
+.footer-bar{
+    flex-direction:column;
+    height:auto;
+    padding:20px;
+    gap:15px;
+}
 }
 
 </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
-    <div class="logo">LOGIN YUK</div>
+<!-- ================= NAVBAR ================= -->
 
-    <div class="nav-icons">
-        💬 📋 👤
+<nav class="navbar">
+
+    <div class="logo">
+        LOGIN YUK
     </div>
-</div>
 
-<!-- HEADER -->
-<div class="header">
+    <div class="nav-right">
+        <span class="nav-icon">💬</span>
+        <span class="nav-icon">📋</span>
+        <span class="nav-icon">👤</span>
+    </div>
+
+</nav>
+
+<!-- ================= HEADER ================= -->
+
+<section class="header">
+
     <h1>My Wishlist</h1>
 
     <div class="search-box">
         <input type="text">
-        <span>🔍</span>
+        <span class="search-icon">🔍</span>
     </div>
-</div>
 
-<!-- TABLE HEADER -->
+</section>
+
+<div class="divider"></div>
+
+<!-- ================= TABLE HEADER ================= -->
+
 <div class="table-header">
+
     <div>Product</div>
     <div>Status</div>
     <div>Price</div>
     <div>Qty</div>
     <div>Total</div>
     <div>Action</div>
+
 </div>
 
-<!-- ITEM 1 -->
+<!-- ================= ITEM 1 ================= -->
+
 <div class="item">
 
-    <div class="store">
-        ☐ Store name
+    <div class="store-name">
+        <div class="checkbox"></div>
+        Store name
     </div>
 
     <div class="product-row">
 
         <div class="product-info">
+
             <div class="checkbox"></div>
 
             <img src="assets/image_coc2.png" alt="CoC lvl 50">
@@ -255,6 +355,7 @@ body{
             <div class="product-title">
                 CoC lvl 50
             </div>
+
         </div>
 
         <div>
@@ -274,23 +375,28 @@ body{
         </div>
 
         <div>
-            <button class="delete-btn">Hapus</button>
+            <button class="delete-btn">
+                Hapus
+            </button>
         </div>
 
     </div>
 
 </div>
 
-<!-- ITEM 2 -->
+<!-- ================= ITEM 2 ================= -->
+
 <div class="item">
 
-    <div class="store">
-        ☐ Store name
+    <div class="store-name">
+        <div class="checkbox"></div>
+        Store name
     </div>
 
     <div class="product-row">
 
         <div class="product-info">
+
             <div class="checkbox"></div>
 
             <img src="assets/image_ml3.png" alt="ML Rank Mythic">
@@ -298,6 +404,7 @@ body{
             <div class="product-title">
                 ML RANK MYTHIC
             </div>
+
         </div>
 
         <div>
@@ -317,23 +424,28 @@ body{
         </div>
 
         <div>
-            <button class="delete-btn">Hapus</button>
+            <button class="delete-btn">
+                Hapus
+            </button>
         </div>
 
     </div>
 
 </div>
 
-<!-- ITEM 3 -->
+<!-- ================= ITEM 3 ================= -->
+
 <div class="item">
 
-    <div class="store">
-        ☐ Store name
+    <div class="store-name">
+        <div class="checkbox"></div>
+        Store name
     </div>
 
     <div class="product-row">
 
         <div class="product-info">
+
             <div class="checkbox"></div>
 
             <img src="assets/image_ml4.png" alt="ML Lapu-Lapu">
@@ -341,6 +453,7 @@ body{
             <div class="product-title">
                 ML Lapu-Lapu
             </div>
+
         </div>
 
         <div>
@@ -360,14 +473,17 @@ body{
         </div>
 
         <div>
-            <button class="delete-btn">Hapus</button>
+            <button class="delete-btn">
+                Hapus
+            </button>
         </div>
 
     </div>
 
 </div>
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
+
 <div class="footer-bar">
 
     <div class="select-all">
@@ -375,7 +491,7 @@ body{
         Select All
     </div>
 
-    <div class="total-text">
+    <div class="total-price">
         Total (0 Product) : Rp 0
     </div>
 
