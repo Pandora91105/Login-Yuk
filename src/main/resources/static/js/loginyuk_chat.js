@@ -97,10 +97,27 @@ function sendMessage() {
     messageInput.value = '';
 }
 
+function loadUserProfile() {
+    if (!token) return;
+
+    fetch('/api/user/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(res => res.json())
+    .then(user => {
+        const photo = user.profilePhoto ?? 'assets/default-avatar.png';
+        document.getElementById('profilePhoto').src = photo;
+    })
+    .catch(err => console.error('Gagal load profile:', err));
+}
+
 sendBtn.addEventListener('click', sendMessage);
 
 messageInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') sendMessage();
 });
 
+
+
 connect();
+loadUserProfile()
