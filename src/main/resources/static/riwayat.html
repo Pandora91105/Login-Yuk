@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Riwayat Transaksi - Login Yuk</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; color: white; font-family: Arial, sans-serif; }
+    header { background: #0f0f1a; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { color: white; font-size: 20px; letter-spacing: 2px; }
+    .nav-icons { display: flex; gap: 20px; font-size: 24px; cursor: pointer; color: #00e5a0; }
+    .container { padding: 30px; max-width: 900px; margin: 0 auto; }
+    h2 { color: #00e5a0; margin-bottom: 20px; font-size: 22px; }
+    .riwayat-item { background: #0f0f1a; border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: 1px solid #2a2a4a; transition: border-color 0.2s; }
+    .riwayat-item:hover { border-color: #00e5a0; }
+    .riwayat-info h3 { font-size: 16px; margin-bottom: 5px; }
+    .riwayat-info p { font-size: 13px; color: #aaa; }
+    .riwayat-right { text-align: right; }
+    .riwayat-harga { color: #00e5a0; font-size: 16px; font-weight: bold; margin-bottom: 5px; }
+    .status-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: bold; display: inline-block; }
+    .status-PENDING { background: #ffaa00; color: #1a1a2e; }
+    .status-SUCCESS { background: #00e5a0; color: #0f0f1a; }
+    .loading, .empty, .error { text-align: center; padding: 50px; color: #aaa; }
+    .error { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LOGIN YUK</h1>
+    <div class="nav-icons">
+      <span>💬</span>
+      <span>📋</span>
+      <span>👤</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Riwayat Transaksi</h2>
+    <div id="riwayatList">
+      <div class="loading">Memuat riwayat transaksi...</div>
+    </div>
+  </div>
+
+  <script>
+    const BUYER_ID = 1; // dummy
+
+    function formatRupiah(angka) {
+      return 'Rp ' + Number(angka).toLocaleString('id-ID');
+    }
+
+    function formatTanggal(dateStr) {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    async function loadRiwayat() {
+      try {
+        const res = await fetch(`http://localhost:8080/api/transaksi/riwayat/${BUYER_ID}`);
+        if (!res.ok) throw new Error('Gagal fetch');
+        const data = await res.json();
+        const container = document.getElementById('riwayatList');
+
+        if (data.length === 0) {
+          container.innerHTML = '<div class="empty">Belum ada riwayat transaksi.</div>';
+          return;
+        }
+
+        // Urutkan terbaru dulu
+        data.sort((a, b) => new Date(b.waktuTransaksi) - new Date(a.waktuTransaksi));
+
+        container.innerHTML = data.map(trx => `
+          <div class="riwayat-item" onclick="lihatDetail(${JSON.stringify(trx).replace(/"/g, '&quot;')})">
+            <div class="riwayat-info">
+              <h3>${trx.game?.namaGame || 'Game tidak diketahui'}</h3>
+              <p>${formatTanggal(trx.waktuTransaksi)} • ${trx.metodePembayaran || '-'}</p>
+            </div>
+            <div class="riwayat-right">
+              <div class="riwayat-harga">${formatRupiah(trx.harga || trx.game?.harga || 0)}</div>
+              <span class="status-badge status-${trx.status}">${trx.status}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        document.getElementById('riwayatList').innerHTML = '<div class="error">Gagal memuat riwayat. Pastikan backend berjalan.</div>';
+      }
+    }
+
+    function lihatDetail(trx) {
+      localStorage.setItem('transaksiData', JSON.stringify(trx));
+      window.location.href = 'payment-success.html';
+    }
+
+    loadRiwayat();
+  </script>
+</body>
+</html>
