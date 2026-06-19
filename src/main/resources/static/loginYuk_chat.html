@@ -57,14 +57,14 @@
     <div class="chat-container">
 
         <!-- === SIDEBAR (list room) === -->
-        <aside class="chat-sidebar">
+        <aside class="chat-sidebar" id="roomList">
 
             <!-- Room item — di-generate dari JS nanti -->
-            <div class="room-item active">
-                <img src="/assets/image_14.png" alt="avatar" class="room-avatar">
+            <div class="room-item active" data-room-id="1">
+                <img src="/assets/image_14.png" alt="avatar" class="room-avatar" id="sidebarOpponentPhoto">
                 <div class="room-info">
-                    <span class="room-name">Store Name</span>
-                    <span class="room-preview">pesan terakhir...</span>
+                    <span class="room-name" id="sidebarOpponentName">Store Name</span>
+                    <span class="room-preview" id="sidebarLastMessage">pesan terakhir...</span>
                 </div>
             </div>
             <!-- /room-item -->
@@ -78,10 +78,10 @@
 
             <!-- Header chat -->
             <div class="chat-header">
-                <img src="assets/image_14.png" alt="avatar" class="chat-avatar">
+                <img src="assets/image_14.png" alt="avatar" class="chat-avatar" id="chatOpponentPhoto">
                 <div class="chat-header-info">
-                    <span class="chat-store-name">Store Name</span>
-                    <span class="chat-status">Active 4H ago</span>
+                    <span class="chat-store-name" id="chatOpponentName">Store Name</span>
+                    <span class="chat-status" id="chatOpponentStatus">Active 4H ago</span>
                 </div>
             </div>
             <!-- /chat-header -->

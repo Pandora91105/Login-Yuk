@@ -124,6 +124,40 @@ function loadUserProfile() {
     .catch(err => console.error('Gagal load profile:', err));
 }
 
+/**
+ * Ambil info lawan chat (nama & foto) untuk room tertentu,
+ * lalu render ke chat-header dan sidebar room-item.
+ * Pakai endpoint RoomController: GET /api/rooms/{roomId}
+ */
+function loadRoomInfo(roomId) {
+    if (!token) return;
+
+    fetch(`${API_BASE}/api/rooms/${roomId}`, {
+        headers: { 'Authorization': 'Bearer ' + token }
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Gagal ambil info room: ' + res.status);
+        return res.json();
+    })
+    .then(room => {
+        const name = room.opponentName ?? 'Unknown';
+        const photo = room.opponentPhoto ?? 'assets/default-avatar.png';
+
+        // Header chat
+        const headerName = document.getElementById('chatOpponentName');
+        const headerPhoto = document.getElementById('chatOpponentPhoto');
+        if (headerName) headerName.textContent = name;
+        if (headerPhoto) headerPhoto.src = photo;
+
+        // Sidebar room-item (untuk room yang sedang aktif)
+        const sidebarName = document.getElementById('sidebarOpponentName');
+        const sidebarPhoto = document.getElementById('sidebarOpponentPhoto');
+        if (sidebarName) sidebarName.textContent = name;
+        if (sidebarPhoto) sidebarPhoto.src = photo;
+    })
+    .catch(err => console.error('Gagal load room info:', err));
+}
+
 sendBtn.addEventListener('click', sendMessage);
 
 messageInput.addEventListener('keypress', function (e) {
@@ -132,3 +166,4 @@ messageInput.addEventListener('keypress', function (e) {
 
 connect();
 loadUserProfile();
+loadRoomInfo(roomId);
