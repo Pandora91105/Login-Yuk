@@ -278,20 +278,42 @@ body{
 
 <!-- NAVBAR -->
 
-<nav class="navbar">
+<header class="navbar">
+        <a class="brand" href="#">LOGIN<span>YUK</span></a>
+        
+        <div class="search-wrap">
+            <input type="text" placeholder="Cari akun game favoritmu..." />
+            <span class="search-icon">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+            </svg>
+            </span>
+        </div>
+        
+        <nav class="nav-actions">
+            <!-- Chat -->
+            <a class="nav-btn" title="Pesan" href="loginYuk_chat.html">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H6l-2 2V4h16v10z"/>
+            </svg>
+            </a>
+            <!-- Orders -->
+            <a class="nav-btn" title="Wishlist" href="wishlist.html">
+            <img src="assets/wishlist.png">
+            </a>
 
-    <div class="logo">LOGIN YUK</div>
+            <button class="nav-btn" title="Transaction">
+            <img src="assets/basket3.png">
+            </button>
 
-    <div class="search-box">
-        <input type="text">
-        <span>🔍</span>
-    </div>
-
-    <div class="nav-icons">
-        💬 📋 👤
-    </div>
-
-</nav>
+            <!-- Profile -->
+            <button class="nav-btn" title="Profil">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+            </button>
+        </nav>
+        </header>
 
 <!-- DETAIL PRODUK -->
 
