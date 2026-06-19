@@ -10,6 +10,7 @@ const token = localStorage.getItem('jwt');
 
 let stompClient = null;
 let subscription = null;
+let isConnecting = false;
 
 function renderBubble(isi, isMine) {
     const row = document.createElement('div');
@@ -32,7 +33,10 @@ function loadMessages(roomId) {
     fetch(`${API_BASE}/api/chat/history/${roomId}`, {
         headers: { 'Authorization': 'Bearer ' + token }
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) throw new Error('Gagal load messages: status ' + res.status);
+        return res.json();
+    })
     .then(messages => {
         chatMessages.innerHTML = ''; // clear dulu
         messages.forEach(msg => {
@@ -48,29 +52,37 @@ function connect() {
         console.log("Sudah terkoneksi, skip connect()");
         return;
     }
+    if (isConnecting) {
+        console.log("Sedang proses connect, skip connect() ganda");
+        return;
+    }
+    isConnecting = true;
 
     const socket = new SockJS(`${API_BASE}/ws-chat`);
     stompClient = Stomp.over(socket);
+    stompClient.debug = null; // matikan log verbose stomp.js (opsional)
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
+        isConnecting = false;
 
+        // Pastikan cuma ada SATU subscription aktif untuk room ini
         if (subscription) {
             subscription.unsubscribe();
             subscription = null;
         }
 
         subscription = stompClient.subscribe(`/topic/rooms/${roomId}`, function(message) {
-            console.log("RAW", message.body);
             const msg = JSON.parse(message.body);
             const isMine = String(msg.senderId) === String(getUserId());
             renderBubble(msg.content, isMine);
         });
 
-        loadMessages(roomId); // ← pakai roomId bukan currentRoomId
-    
+        loadMessages(roomId); // load history sekali saat baru connect
+
     }, function (error) {
         console.error('STOMP error:', error);
+        isConnecting = false;
     });
 }
 
@@ -94,7 +106,11 @@ function getUserId() {
     }
 }
 
+let isSending = false;
+
 function sendMessage() {
+    if (isSending) return; // cegah kirim ganda (double-klik / spam Enter)
+
     const isi = messageInput.value.trim();
     if (isi === '' || !stompClient) return;
 
@@ -106,8 +122,18 @@ function sendMessage() {
         type: 'CHAT'
     };
 
+    isSending = true;
+    sendBtn.disabled = true;
+
     stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
     messageInput.value = '';
+
+    // Re-enable cepat (150ms) — cukup untuk blok double-klik/double-enter,
+    // tapi tidak terasa lambat untuk user kirim pesan berikutnya
+    setTimeout(() => {
+        isSending = false;
+        sendBtn.disabled = false;
+    }, 150);
 }
 
 function loadUserProfile() {

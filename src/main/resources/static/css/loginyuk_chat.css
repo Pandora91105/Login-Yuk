@@ -101,6 +101,8 @@ body {
 .chat-container {
     display: grid;
     grid-template-areas: 'sidebar sidebar  chat chat chat chat';
+    /* Batasi tinggi container biar children flex/overflow bisa kehitung */
+    height: 90vh;
 }
 
 .chat-sidebar {
@@ -109,6 +111,7 @@ body {
     padding: 20px;
     grid-area: sidebar;
     border-right: 5px solid var(--primary);
+    overflow-y: auto; /* jaga-jaga kalau list room banyak */
 }
 
 .room-item {
@@ -148,10 +151,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.chat-messages {
-    height: 80vh;
+    /* Pastikan chat-area sendiri tidak ikut meluap keluar parent */
+    overflow: hidden;
 }
 
 .chat-header {
@@ -164,6 +165,7 @@ body {
     border-radius: 25px;
     padding: 5px 15px;
     gap: 10px;
+    flex-shrink: 0; /* header jangan ikut menyusut/membesar */
 
 }
 
@@ -190,23 +192,26 @@ body {
     
 }
 
-.chat-input-area {
-    color: #222223;
-    background-color: #222223;
-    border-radius: 75px;
-    height: 40px;
-    width: 100%;
-    margin-right: 20px;
-    margin-left: 20px;
-}
-
+/*
+   .chat-messages digabung jadi SATU rule (sebelumnya ada 2 deklarasi terpisah
+   yang saling menimpa sebagian properti). Kuncinya:
+   - flex: 1        -> ngisi sisa ruang vertikal di antara header & input
+   - overflow-y: auto -> inilah yang bikin area ini BISA discroll
+   - min-height: 0  -> wajib di flex child, kalau tidak overflow tidak akan
+                       pernah kepicu karena elemen akan terus membesar
+                       mengikuti konten (flexbox default min-height: auto)
+*/
 .chat-messages {
     width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     border-radius: 20px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    box-sizing: border-box;
 }
 
 .chat-bubble {
@@ -252,6 +257,7 @@ body {
     align-items: center;
     gap: 10px;
     margin-top: 20px;
+    flex-shrink: 0; /* input area jangan ikut kegencet kalau pesan banyak */
 }
 .chat-input-area input {
     flex: 1;
