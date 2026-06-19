@@ -101,7 +101,6 @@ body {
 .chat-container {
     display: grid;
     grid-template-areas: 'sidebar sidebar  chat chat chat chat';
-    /* Batasi tinggi container biar children flex/overflow bisa kehitung */
     height: 90vh;
 }
 
@@ -111,7 +110,7 @@ body {
     padding: 20px;
     grid-area: sidebar;
     border-right: 5px solid var(--primary);
-    overflow-y: auto; /* jaga-jaga kalau list room banyak */
+    overflow-y: auto; 
 }
 
 .room-item {
@@ -151,7 +150,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Pastikan chat-area sendiri tidak ikut meluap keluar parent */
     overflow: hidden;
 }
 
@@ -165,7 +163,7 @@ body {
     border-radius: 25px;
     padding: 5px 15px;
     gap: 10px;
-    flex-shrink: 0; /* header jangan ikut menyusut/membesar */
+    flex-shrink: 0; 
 
 }
 
@@ -263,6 +261,7 @@ body {
     flex: 1;
     padding: 10px 15px;
     border-radius: 75px;
+    width: 500px;
     border: none;
     outline: none;
     background-color: var(--primary);

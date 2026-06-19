@@ -10,11 +10,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>LoginYuk - Marketplace Akun Game</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/index.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
-    
         <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -41,19 +39,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             </svg>
             </a>
             <!-- Orders -->
-            <a class="nav-btn" title="Wishlist" href="wishlist.html">
+            <button class="nav-btn" title="Wishlist">
             <img src="assets/wishlist.png">
-            </a>
+            </button>
 
-            <button class="nav-btn" title="Transaction" href="riwayat.html">
+            <button class="nav-btn" title="Transaction">
             <img src="assets/basket3.png">
             </button>
 
             <!-- Profile -->
             <button class="nav-btn" title="Profil">
-            <img id="profilePhoto" src="assets/default-avatar.png"
-            style="width:32px;height:32px;border-radius:50%;object-fit:cover;">
-        </button>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+            </button>
         </nav>
         </header>
         
@@ -77,7 +76,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <!-- Row 1 -->
         <div class="card-grid">
         
-            <div class="card">
+            <a href="itemDetail.html" class="card">
             <div class="card-img-wrap">
                 <img src="assets/image_ml1.png" alt="Akun ML" />
                 
@@ -89,7 +88,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <span class="price-value">250.000</span>
                 </div>
             </div>
-            </div>
+            </a>
         
             <div class="card">
             <div class="card-img-wrap">
@@ -201,26 +200,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </div>
         
         </main>
-
-        <script>
-            const userId   = localStorage.getItem('userId');
-            const username = localStorage.getItem('username');
-            const userRole = localStorage.getItem('userRole');
-
-            if (!userId) {
-                window.location.href = 'login.html';
-            }
-
-            const profileBtn = document.querySelector('[title="Profil"]');
-            if (profileBtn && username) {
-                profileBtn.setAttribute('title', username);
-            }
-
-            const txBtn = document.querySelector('[title="Transaction"]');
-            if (txBtn) {
-                txBtn.onclick = () => window.location.href = 'riwayat.html';
-            }
-        </script>
         
     </body>
 </html>
