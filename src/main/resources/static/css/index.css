@@ -89,8 +89,8 @@ html { scroll-behavior: smooth; }
       background: var(--accent-dim);
       box-shadow: 0 0 0 1px var(--accent-glow);
     }
-    .nav-btn svg { width: 18px; height: 18px; fill: currentColor; }
-    .nav-btn img { width: 17px; height: 17px; fill: currentColor; }
+    .nav-btn svg { width: 20px; height: 20px; fill: currentColor; }
+    .nav-btn img { width: 20px; height: 20px; fill: currentColor; }
  
     /* ── HERO BANNER ── */
     .hero {
