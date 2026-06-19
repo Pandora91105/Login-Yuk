@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Detail Produk</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#262626;
+    color:white;
+    font-family:'League Spartan',sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    height:85px;
+    background:#242424;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+}
+
+.logo{
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
+}
+
+.search-box{
+    width:650px;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    height:52px;
+    border:none;
+    outline:none;
+    border-radius:30px;
+    background:#4c4c4c;
+    color:white;
+    padding:0 60px 0 20px;
+}
+
+.search-box span{
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#67e5d1;
+    font-size:25px;
+}
+
+.nav-icons{
+    display:flex;
+    gap:25px;
+    font-size:30px;
+    color:#67e5d1;
+}
+
+/* ================= PRODUCT DETAIL ================= */
+
+.product-container{
+    background:#05030d;
+    margin:25px 70px;
+    padding:25px;
+    display:flex;
+    gap:30px;
+}
+
+.left-side{
+    width:50%;
+}
+
+.main-image{
+    width:100%;
+    height:650px;
+    object-fit:cover;
+}
+
+.thumbnail{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.thumbnail img{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+}
+
+.right-side{
+    width:50%;
+}
+
+.right-side h1{
+    font-family:'Krona One',sans-serif;
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.price{
+    font-family:'Krona One',sans-serif;
+    color:#57d8bf;
+    font-size:48px;
+    margin-bottom:30px;
+}
+
+.section-title{
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.description{
+    line-height:1.7;
+    font-size:24px;
+    margin-left:20px;
+}
+
+.btn-group{
+    display:flex;
+    gap:20px;
+    margin-top:30px;
+}
+
+.buy-btn{
+    background:#75d7c7;
+    border:none;
+    padding:18px 55px;
+    color:white;
+    font-family:'Krona One',sans-serif;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.wishlist-btn{
+    background:#bb91d9;
+    border:none;
+    padding:18px 40px;
+    color:white;
+    font-family:'Krona One',sans-serif;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* ================= STORE ================= */
+
+.store-box{
+    background:#05030d;
+    margin:35px 70px;
+    padding:35px;
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.store-box img{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+}
+
+.store-name{
+    font-family:'Krona One',sans-serif;
+    margin-bottom:10px;
+}
+
+.active{
+    background:#353535;
+    padding:8px 12px;
+    display:inline-block;
+    margin-bottom:12px;
+}
+
+.visit{
+    background:#75d7c7;
+    border:none;
+    padding:10px 20px;
+    color:white;
+    border-radius:5px;
+    font-family:'Krona One',sans-serif;
+}
+
+.chat{
+    background:#bb91d9;
+    border:none;
+    padding:10px 20px;
+    color:white;
+    border-radius:5px;
+    font-family:'Krona One',sans-serif;
+    margin-left:10px;
+}
+
+/* ================= RECOMMENDATION ================= */
+
+.recommendation{
+    padding:20px 70px 50px;
+}
+
+.recommendation h2{
+    font-family:'Krona One',sans-serif;
+    font-size:55px;
+    margin-bottom:40px;
+}
+
+.card-wrapper{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:35px;
+}
+
+.card{
+    background:#05030d;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.card img{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+}
+
+.card h3{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+.card p{
+    font-family:'Krona One',sans-serif;
+    font-size:18px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px){
+
+.product-container{
+    flex-direction:column;
+}
+
+.left-side,
+.right-side{
+    width:100%;
+}
+
+.card-wrapper{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.search-box{
+    width:400px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">LOGIN YUK</div>
+
+    <div class="search-box">
+        <input type="text">
+        <span>🔍</span>
+    </div>
+
+    <div class="nav-icons">
+        💬 📋 👤
+    </div>
+
+</nav>
+
+<!-- DETAIL PRODUK -->
+
+<section class="product-container">
+
+    <div class="left-side">
+
+        <img src="assets/hilda_main.png" class="main-image" alt="Hilda">
+
+        <div class="thumbnail">
+            <img src="assets/hilda_main.png" alt="">
+            <img src="assets/hilda_rank.png" alt="">
+        </div>
+
+    </div>
+
+    <div class="right-side">
+
+        <h1>Beli Akun ML</h1>
+
+        <div class="price">
+            Rp 250.000
+        </div>
+
+        <div class="section-title">
+            Deskripsi
+        </div>
+
+        <ul class="description">
+            <li>Rank : Epic II ⭐⭐⭐ (bisa push lagi)</li>
+            <li>Hero Utama : Hilda</li>
+            <li>Total Hero : 45+ Hero</li>
+            <li>Skin : 12 Skin (termasuk skin Hilda)</li>
+            <li>Winrate Hilda : 65%+</li>
+            <li>Emblem tinggi & siap ranked</li>
+            <li>Battle Point & Ticket tersedia</li>
+        </ul>
+
+        <br><br>
+
+        <div class="section-title">
+            Keunggulan Akun
+        </div>
+
+        <ul class="description">
+            <li>✅ Cocok untuk EXP Lane / Roamer</li>
+            <li>✅ Hilda kuat early game</li>
+            <li>✅ Akun aman & legal</li>
+            <li>✅ Tidak pernah banned</li>
+            <li>✅ Siap main ranked langsung</li>
+        </ul>
+
+        <br><br>
+
+        <div class="section-title">
+            Keamanan
+        </div>
+
+        <ul class="description">
+            <li>🔒 Bind aman</li>
+            <li>🔒 Full akses setelah transaksi</li>
+        </ul>
+
+        <div class="btn-group">
+
+            <button class="buy-btn">
+                Buy Now
+            </button>
+
+            <button class="wishlist-btn">
+                Add to Wishlist
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- STORE -->
+
+<section class="store-box">
+
+    <img src="assets/store_profile.png" alt="Store">
+
+    <div>
+
+        <div class="store-name">
+            Store name
+        </div>
+
+        <div class="active">
+            Active 4H ago
+        </div>
+
+        <br>
+
+        <button class="visit">
+            Visit Store
+        </button>
+
+        <button class="chat">
+            Chat
+        </button>
+
+    </div>
+
+</section>
+
+<!-- RECOMMENDATION -->
+
+<section class="recommendation">
+
+    <h2>RECOMENDATION</h2>
+
+    <div class="card-wrapper">
+
+        <div class="card">
+
+            <img src="assets/pubg.png" alt="PUBG">
+
+            <div class="card-content">
+
+                <h3>PUBG lama ga dipake</h3>
+
+                <p>Rp 50.000</p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <img src="assets/image_coc2.png" alt="CoC">
+
+            <div class="card-content">
+
+                <h3>CoC lvl 50</h3>
+
+                <p>Rp 65.000</p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <img src="assets/image_ml3.png" alt="Mythic">
+
+            <div class="card-content">
+
+                <h3>ML RANK MYTHIC</h3>
+
+                <p>Rp 2.745.000</p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <img src="assets/image_ml4.png" alt="Lapu">
+
+            <div class="card-content">
+
+                <h3>ML lapu-lapu</h3>
+
+                <p>Rp 750.000</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>
