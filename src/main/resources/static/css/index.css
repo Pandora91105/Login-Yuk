@@ -27,7 +27,7 @@ html { scroll-behavior: smooth; }
     }
  
     .brand {
-      font-family: 'kro', sans-serif;
+      font-family: 'Krona one', sans-serif;
       font-weight: 700;
       font-size: 18px;
       letter-spacing: 0.08em;
@@ -90,6 +90,7 @@ html { scroll-behavior: smooth; }
       box-shadow: 0 0 0 1px var(--accent-glow);
     }
     .nav-btn svg { width: 18px; height: 18px; fill: currentColor; }
+    .nav-btn img { width: 17px; height: 17px; fill: currentColor; }
  
     /* ── HERO BANNER ── */
     .hero {
